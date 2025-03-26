@@ -141,6 +141,61 @@ public class UserInteraction {
 		return theSystemController.getAllUniversities();
 	}
 	
+	/*
+	 * A more specific method for getting a particular University
+	 * @param String schoolName gets user entry for schoolName
+	 * @return school gives the school info
+	 * @return null is an alt case if school not found
+	 * @author Rick Masaana
+	 * 3/25/2025
+	 */
+	public University getUniversityDetails (String schoolName){
+		List<University> allSchools = theSystemController.getAllUniversities();
+		
+		//iterate through list using University list
+		for (University school : allSchools) {
+			
+			//confirm that named school exists
+			if (school.getName().equals(schoolName)){
+				return school; //return the school info
+			}
+		}
+		return null; //else null
+	}
+	
+	/*
+	 * string builder for formating University details
+	 * University university
+	 * @author Rick Masaana
+	 * 3/25/2025
+	 */
+	public String formatUniversityDetails(University university){
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("Name: ").append(university.getName()).append("\n");
+		sb.append("State: ").append(university.getState()).append("\n");
+		sb.append("Location: ").append(university.getLocation()).append("\n");
+		sb.append("Control: ").append(university.getControl()).append("\n");
+		sb.append("Number of Students: ").append(university.getNumStudents()).append("\n");
+		sb.append("Percent female: ").append(university.getPercentFemale()).append("\n");
+		sb.append("SAT Verbal: ").append(university.getSatVerbal()).append("\n");
+		sb.append("SAT Math: ").append(university.getSatMath()).append("\n");
+		sb.append("expenses: ").append(university.getExpenses()).append("\n");
+		sb.append("Percent Financial Aid: ").append(university.getPercentFinancialAid()).append("\n");
+		sb.append("Applicants: ").append(university.getNumApplicants()).append("\n");
+		sb.append("Percent Admitted: ").append(university.getPercentAdmitted()).append("\n");
+		sb.append("Percent Enrolled: ").append(university.getPercentEnrolled()).append("\n");
+		sb.append("Academic Scale: ").append(university.getScaleAcademics()).append("\n");
+		sb.append("Social Scale: ").append(university.getScaleSocial()).append("\n");
+		sb.append("Quality of Life Scale: ").append(university.getScaleQualityOfLife()).append("\n");
+		
+		return sb.toString();
+	}
+	
+	public boolean editUniversityDetails (University dataBaseUniversity) throws CMCException {
+		return SystemController.editUniversityDetails(dataBaseUniversity);
+	}
+	
 	/**
 	 * Adds a new university to the database.
 	 * @param uni University

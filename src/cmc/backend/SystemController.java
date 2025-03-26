@@ -155,8 +155,13 @@ public class SystemController {
 			}
 		}
 		
-		return schoolName + " " + "is not on the list"; //alt return
+		return schoolName + " " + "is not on the list";
 	}
+	
+	public static boolean editUniversityDetails (University editedUniversity) throws CMCException {
+		return SystemController.editUniversityDetails(editedUniversity);
+	}
+	
 	
 	/**
 	 * Gets a list of every university in the database.
