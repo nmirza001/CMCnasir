@@ -140,45 +140,46 @@ public class AdminEditSchool{
 		edittedUniversity.setScaleQualityOfLife(qualLifeScale);
 		
 		return edittedUniversity;
-}
-
-private static int listPromptExist(String question, String[] friendlyOptions, Scanner sc, String existingVal) {
-	
-	int sz = friendlyOptions.length;
-	
-	for(int i = 0; i < sz; i++) {
-		String msg = String.format("%d) %s", i + 1, friendlyOptions[i]);
-		System.out.println(msg);
 	}
 	
-	System.out.print("\n" + question + "(current: " + existingVal + "): ");
-	
-	String given = tryLine(sc);
-	if(given == null) return -2;
-	if (given.trim().isEmpty()) {
-		for (int i = 0; i < friendlyOptions.length; i++){
-			if (friendlyOptions[i].equalsIgnoreCase(existingVal));
-			return i;
+	private static int listPromptExist(String question, String[] friendlyOptions, Scanner sc, String existingVal) {
+		
+		int sz = friendlyOptions.length;
+		
+		for(int i = 0; i < sz; i++) {
+			String msg = String.format("%d) %s", i + 1, friendlyOptions[i]);
+			System.out.println(msg);
 		}
-		return -1;
+		
+		System.out.print("\n" + question + "(current: " + existingVal + "): ");
+		
+		String given = tryLine(sc);
+		if(given == null) return -2;
+		if (given.trim().isEmpty()) {
+			for (int i = 0; i < friendlyOptions.length; i++){
+				if (friendlyOptions[i].equalsIgnoreCase(existingVal));
+				return i;
+			}
+			return -1;
+		}
+		
+		int num = tryParseInt(given);
+		if(num <= 0 || num > sz) return -1;
+		else return num - 1;
+		
 	}
 	
-	int num = tryParseInt(given);
-	if(num <= 0 || num > sz) return -1;
-	else return num - 1;
-	
-}
-
-public static String tryLine(Scanner s){
-	String line = s.nextLine();
-	return "Exit".equals(line) ? null : line;
-}
-
-public static int tryParseInt(String s){
-	try {
-		return Integer.parseInt(s);
+	public static String tryLine(Scanner s){
+		String line = s.nextLine();
+		return "Exit".equals(line) ? null : line;
 	}
-	catch (NumberFormatException e){
-		return -1;
+	
+	public static int tryParseInt(String s){
+		try {
+			return Integer.parseInt(s);
+		}
+		catch (NumberFormatException e){
+			return -1;
+		}
 	}
 }
