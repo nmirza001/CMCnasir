@@ -23,9 +23,9 @@ public class Admin extends Account{
 	 * @param user the user to create
 	 * @return true if user is created otherwise false
 	 */
-	public boolean createUser (User user) {
-		return false;
-	}
+	//public boolean createUser (User user) {
+	//	return false;
+	//}
 	/**
 	 * 
 	 * @param username the username of account to delete
@@ -38,9 +38,9 @@ public class Admin extends Account{
 	 * 
 	 * @return a list of User objects
 	 */
-	public List <User> listAllUsers(){
-		return new ArrayList<>();
-	}
+	//public List<User> listAllUsers(){
+	//	return new ArrayList<User>();
+	//}
 	/**
 	 * 
 	 * @param universityName name of university to manage
