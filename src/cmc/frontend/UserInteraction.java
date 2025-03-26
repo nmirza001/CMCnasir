@@ -1,6 +1,7 @@
 package cmc.frontend;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import cmc.CMCException;
@@ -58,7 +59,7 @@ public class UserInteraction {
 	}
 	
 	// for admins, this gets the list of all users in the system
-	public List<String[]> getAllUsers() {
+	public Map<Integer, String[]> getAllUsers() {
 		return this.theSystemController.getAllUsers();
 	}
 	
@@ -84,10 +85,25 @@ public class UserInteraction {
 	// ask the admin for a username and then remove that user from the
 	// database
 	public boolean removeUser(Scanner s) {
-		System.out.print("Username: ");
-		String username = s.nextLine();
+		
+		Map<Integer, String[]> allU = getAllUsers();
 
-		return this.theSystemController.removeUser(username);
+		for(Map.Entry<Integer, String[]> entry : allU.entrySet()) {
+			Integer key = entry.getKey();
+
+			String[] val = entry.getValue();
+
+			System.out.println(key + ". " + val[0]);	}
+ 
+		System.out.print("Username number:");
+ 
+		int usernum = s.nextInt();
+		s.nextLine();
+ 
+		String[] userName = allU.get(usernum);
+		
+ 
+		return this.theSystemController.removeUser(userName[2]);
 	}
 	
 	public List<University> search(Scanner s) {

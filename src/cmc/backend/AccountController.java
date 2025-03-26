@@ -4,6 +4,7 @@
 package cmc.backend;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -82,12 +83,14 @@ public class AccountController {
 		}
 		
 		// get the list of all the users in the DB
-		public List<String[]> getAllUsers() {
+		public Map<Integer, String[]> getAllUsers() {
 			String[][] dbUserList = this.database.user_getUsers();
 			
-			ArrayList<String[]> result = new ArrayList<String[]>();
+			int count = 0;
+			Map<Integer, String[]> result = new HashMap<Integer, String[]>();
 			for (String[] user : dbUserList) {
-				result.add(user);
+				result.put(count, user);
+				count++;
 			}
 			
 			return result;
