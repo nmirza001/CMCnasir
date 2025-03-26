@@ -9,11 +9,13 @@ import cmc.backend.entities.University;
 
 public class SystemController {
 	private DatabaseController myDBController;
+	private AccountController myAC;
 	
 	// Construct a SystemController using the basic (no parameter)
 	// DatabaseController as the underlying database access.
 	public SystemController() {
 		this.myDBController = new DatabaseController();
+		this.myAC = new AccountController();
 	}
 	
 	/**
@@ -51,7 +53,7 @@ public class SystemController {
 	// this ADMIN ONLY method returns the list of all the users (and their data)
 	// TODO: shouldn't this return a List of User objects?
 	public List<String[]> getAllUsers() {
-		List<String[]> usersList = this.myDBController.getAllUsers();
+		List<String[]> usersList = this.myAC.getAllUsers();
 		return usersList;
 	}
 	
@@ -61,7 +63,7 @@ public class SystemController {
 			String firstName, String lastName, boolean isAdmin) {
 		char type = (isAdmin ? 'a' : 'u');
 		try {
-			return this.myDBController.addUser(username, password, type, firstName, lastName);
+			return this.myAC.addUser(username, password, type, firstName, lastName);
 		} catch (CMCException e) {
 			// TODO: should we let the calling class report the error more
 			//       clearly by passing it on?
@@ -73,7 +75,7 @@ public class SystemController {
 	// based on the provided username
 	public boolean removeUser(String username) {
 		try {
-			return this.myDBController.removeUser(username);
+			return this.myAC.removeUser(username);
 		} catch (CMCException e) {
 			// TODO: should we let the calling class report the error more
 			//       clearly by passing it on?
