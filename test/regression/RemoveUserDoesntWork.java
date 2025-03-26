@@ -15,13 +15,13 @@ public class RemoveUserDoesntWork {
 	
 	@Test
 	public void test() throws CMCException {
-		DatabaseController db = new DatabaseController();
+		AccountController ac = new AccountController();
 		SystemController sc = new SystemController();
 		
-		db.addUser(U_USER, PASSWD, 'u', "Admin", "McAdministrator");
+		ac.addUser(U_USER, PASSWD, 'u', "Admin", "McAdministrator");
 		sc.saveSchool(U_USER, "BARD");
 		
-		boolean succ = db.removeUser(U_USER);
+		boolean succ = ac.removeUser(U_USER);
 		Assert.assertTrue(succ);
 
 				

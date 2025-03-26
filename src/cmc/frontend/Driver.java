@@ -2,6 +2,7 @@ package cmc.frontend;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import cmc.*;
 import cmc.backend.entities.*;
@@ -31,8 +32,8 @@ public class Driver {
 		printHeader("Admin User List");
 		
 		// TODO: it would be nice if this was refactored into a list of User objects...
-		List<String[]> allUsers = ui.getAllUsers();
-		for (String[] user : allUsers) {
+		Map<Integer, String[]> allUsers = ui.getAllUsers();
+		for (String[] user : allUsers.values()) {
 			System.out.println(user[2] + " | " + user[0] + " | " + user[1]);
 		}
 		System.out.println();

@@ -18,7 +18,7 @@ import cmc.backend.entities.University;
  */
 public class UniversityTest {
 	
-	private DatabaseController db;
+	private UniversityController db;
 	private static final String NAME = "TEST SCHOOL NAME";
 	
 	private University getUni(String name) {
@@ -28,7 +28,7 @@ public class UniversityTest {
 	
 	@Before
 	public void setUp() {
-		db = new DatabaseController();
+		db = new UniversityController();
 		University uni = new University(NAME);
 		boolean succ = db.addNewUniversity(uni);
 		Assert.assertTrue(succ);

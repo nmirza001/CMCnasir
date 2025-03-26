@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cmc.CMCException;
+import cmc.backend.AccountController;
 import cmc.backend.DatabaseController;
 import junit.framework.Assert;
 
@@ -16,17 +17,19 @@ public class SaveSchoolFalseOnDuplicate {
 	private static final String PASSWD = "onskibidi73";
 	
 	private DatabaseController db;
+	private AccountController ac;
 	
 	@Before
 	public void setUp() throws CMCException {
 		db = new DatabaseController();
-		db.addUser(USERNAME, PASSWD, 'u', "lebron", "james");
-		db.deactivateUser(USERNAME);
+		ac = new AccountController();
+		ac.addUser(USERNAME, PASSWD, 'u', "lebron", "james");
+		ac.deactivateUser(USERNAME);
 	}
 	
 	@After
 	public void tearDown() throws CMCException {
-		db.removeUser(USERNAME);
+		ac.removeUser(USERNAME);
 	}
 	
 	@Test

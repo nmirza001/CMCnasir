@@ -9,11 +9,15 @@ import cmc.backend.entities.University;
 
 public class SystemController {
 	private DatabaseController myDBController;
+	private AccountController myAC;
+	private UniversityController myUC;
 	
 	// Construct a SystemController using the basic (no parameter)
 	// DatabaseController as the underlying database access.
 	public SystemController() {
 		this.myDBController = new DatabaseController();
+		this.myAC = new AccountController();
+		this.myUC = new UniversityController();
 	}
 	
 	/**
@@ -50,8 +54,8 @@ public class SystemController {
 
 	// this ADMIN ONLY method returns the list of all the users (and their data)
 	// TODO: shouldn't this return a List of User objects?
-	public List<String[]> getAllUsers() {
-		List<String[]> usersList = this.myDBController.getAllUsers();
+	public Map<Integer, String[]> getAllUsers() {
+		Map<Integer, String[]> usersList = this.myAC.getAllUsers();
 		return usersList;
 	}
 	
@@ -61,7 +65,7 @@ public class SystemController {
 			String firstName, String lastName, boolean isAdmin) {
 		char type = (isAdmin ? 'a' : 'u');
 		try {
-			return this.myDBController.addUser(username, password, type, firstName, lastName);
+			return this.myAC.addUser(username, password, type, firstName, lastName);
 		} catch (CMCException e) {
 			// TODO: should we let the calling class report the error more
 			//       clearly by passing it on?
@@ -73,7 +77,7 @@ public class SystemController {
 	// based on the provided username
 	public boolean removeUser(String username) {
 		try {
-			return this.myDBController.removeUser(username);
+			return this.myAC.removeUser(username);
 		} catch (CMCException e) {
 			// TODO: should we let the calling class report the error more
 			//       clearly by passing it on?
@@ -84,7 +88,7 @@ public class SystemController {
 	// this REGULAR USER ONLY method searches for schools in the database
 	// based on provided criteria (just state for now)
 	public List<University> search(String state) {
-		List<University> schoolList = this.myDBController.getAllSchools();
+		List<University> schoolList = this.myUC.getAllSchools();
 		
 		List<University> filteredList = new ArrayList<>();
 		for (int i = 0; i < schoolList.size(); i++) {
@@ -118,7 +122,7 @@ public class SystemController {
 	 * @version March 24 2025
 	 */
 	public String viewSchool (String schoolName) {
-		List <University> allSchools = this.myDBController.getAllSchools();
+		List <University> allSchools = this.myUC.getAllSchools();
 		
 		//loop through list
 		for (University school : allSchools) {
@@ -171,7 +175,7 @@ public class SystemController {
 	 */
 	public List<University> getAllUniversities() {
 
-		return myDBController.getAllSchools();
+		return myUC.getAllSchools();
 	}
 	
 	/**
@@ -184,7 +188,7 @@ public class SystemController {
 	 */
 	public boolean addNewUniversity(University uni) {
 		
-		return myDBController.addNewUniversity(uni);
+		return myUC.addNewUniversity(uni);
 	}
 	
 	/**
@@ -195,7 +199,7 @@ public class SystemController {
 	 */
 	public boolean removeUniversity(University u) {
  
-		return myDBController.removeUniversity(u);
+		return myUC.removeUniversity(u);
 	}
 
 }

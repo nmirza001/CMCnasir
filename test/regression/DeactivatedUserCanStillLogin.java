@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cmc.CMCException;
+import cmc.backend.AccountController;
 import cmc.backend.DatabaseController;
 import cmc.backend.SystemController;
 import cmc.backend.User;
@@ -17,11 +18,11 @@ public class DeactivatedUserCanStillLogin {
 	private static final String USERNAME = "test_test_test_acct";
 	private static final String PASSWD = "pass123$";
 	
-	private DatabaseController db;
+	private AccountController db;
 	
 	@Before
 	public void setUp() throws CMCException {
-		db = new DatabaseController();
+		db = new AccountController();
 		db.addUser(USERNAME, PASSWD, 'u', "Test", "Acct");
 		db.deactivateUser(USERNAME);
 	}
