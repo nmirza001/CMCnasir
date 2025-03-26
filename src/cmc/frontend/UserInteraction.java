@@ -97,9 +97,21 @@ public class UserInteraction {
  
 		System.out.print("Username number:");
  
-		int usernum = s.nextInt();
-		s.nextLine();
+		int usernum;
+		try {
+			usernum = s.nextInt();
+		}
+		catch(java.util.InputMismatchException e) {
+			return false;
+		}
+		finally {
+			s.nextLine();
+		}
  
+		if(usernum < 0 || usernum >= allU.size()) {
+			return false;
+		}
+		
 		String[] userName = allU.get(usernum);
 		
  
