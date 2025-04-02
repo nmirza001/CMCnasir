@@ -253,7 +253,7 @@ public class DatabaseController {
 	 * @author Roman Lefler
 	 * @version Mar 16, 2025
 	 */
-	public boolean removeEmphasis(String uniName, String emphasis) {
+	private boolean removeEmphasis(String uniName, String emphasis) {
 		int result = database.university_removeUniversityEmphasis(uniName, emphasis);
 		return result > 0;
 	}
@@ -271,7 +271,7 @@ public class DatabaseController {
 	 * @author Roman Lefler
 	 * @version Mar 16, 2025
 	 */
-	public boolean addEmphasis(String uniName, String emphasis) {
+	private boolean addEmphasis(String uniName, String emphasis) {
 		int result = database.university_addUniversityEmphasis(uniName, emphasis);
 		return result > 0;
 	}
