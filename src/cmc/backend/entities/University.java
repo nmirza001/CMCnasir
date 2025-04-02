@@ -60,12 +60,21 @@ public class University {
 	/**
 	 * Ensures that a string is all-caps and not null.
 	 * @param s Given string
-	 * @throws IllegalArgumentException If s is null or not equal to itself {@link String#toUpperCase()}
+	 * @throws IllegalArgumentException If s is null or not equal to itself when {@link String#toUpperCase()}
 	 */
 	private static void ensureCaps(String s) {
-		if(s == null) throw new IllegalArgumentException("String cannot be null.");
-		else if(!s.toUpperCase().equals(s))
+		if(!isAllCaps(s))
 			throw new IllegalArgumentException("'" + s + "' must be in all caps.");
+	}
+	
+	/**
+	 * Checks if a string is all-caps and not null.
+	 * @param s Given string
+	 * @return {@code true} if not null and equal to it's {@link String#toUpperCase()}
+	 */
+	private static boolean isAllCaps(String s) {
+		if(s == null) throw new IllegalArgumentException("String cannot be null.");
+		return s.toUpperCase().equals(s);
 	}
 
 	/**
@@ -313,23 +322,12 @@ public class University {
 	}
 	
 	/**
-	 * This method finds the first University object with a given
-	 * name in the given list.
-	 * This method exists like this to encourage getting the list once,
-	 * instead of making a new list say every 'getUni' call.
-	 * @param list List of universities
-	 * @param name Exact name to search for
-	 * @return First University found, or {@code null} if none are found.
-	 * @author Roman Lefler
-	 * @version Mar 16, 2025
+	 * Checks if a given name is a valid university name.
+	 * @param name Name to test
+	 * @return {@code true} if valid
 	 */
-	public static University find(List<University> list, String name) {
-		if(list == null) throw new IllegalArgumentException("List cannot be null.");
-		ensureCaps(name);
-		for(University u : list) {
-			if(u.getName().equals(name)) return u;
-		}
-		return null;
+	public static boolean isValidName(String name) {
+		return isAllCaps(name);
 	}
 	
 }

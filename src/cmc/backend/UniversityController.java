@@ -96,5 +96,20 @@ public class UniversityController {
 		
 		return db.getUniversitiesEmphases();
 	}
+	
+	/**
+	 * Gets a university by name.
+	 * @param name Exact name to search for
+	 * @return The University if found, otherwise null.
+	 */
+	public University getUniversity(String name) {
+		List<University> list = getAllSchools();
+		
+		if(!University.isValidName(name)) throw new IllegalArgumentException("Invalid university name.");
+		for(University u : list) {
+			if(u.getName().equals(name)) return u;
+		}
+		return null;
+	}
 		
 }

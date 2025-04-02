@@ -352,7 +352,7 @@ public class DatabaseController {
 		// Anything that is present in u but not in the database
 		// was added.
 		String uniName = u.getName();
-		University old = University.find(getAllSchools(), uniName);
+		University old = new UniversityController().getUniversity(uniName);
 		List<String> oldE = old.getEmphases();
 		List<String> newE = u.getEmphases();
 		// Create a total set of all emphases
