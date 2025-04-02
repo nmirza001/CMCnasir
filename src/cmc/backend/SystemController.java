@@ -55,7 +55,7 @@ public class SystemController {
 	// this ADMIN ONLY method returns the list of all the users (and their data)
 	// TODO: shouldn't this return a List of User objects?
 	public Map<Integer, String[]> getAllUsers() {
-		Map<Integer, String[]> usersList = this.myAC.getAllUsers();
+		Map<Integer, String[]> usersList = null;
 		return usersList;
 	}
 	
