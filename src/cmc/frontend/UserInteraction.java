@@ -92,9 +92,10 @@ public class UserInteraction {
 		List<String[]> allU = getAllUsers();
 
 		int len = allU.size();
+		// List starts at 1
 		for(int i = 0; i < len; i++) {
-			
-			System.out.println(i + ". " + allU.get(i)[0]);
+			String msg = String.format("%d. %s", i + 1, allU.get(i)[0]);
+			System.out.println(msg);
 		}
  
 		System.out.print("Username number:");
@@ -110,11 +111,13 @@ public class UserInteraction {
 			s.nextLine();
 		}
  
-		if(usernum < 0 || usernum >= allU.size()) {
+		// List starts at 1 so zero is not a valid option
+		if(usernum <= 0 || usernum >= allU.size()) {
 			return false;
 		}
 		
-		String[] userName = allU.get(usernum);
+		// Shift everything by 1 since list starts at 1
+		String[] userName = allU.get(usernum - 1);
 		
  
 		return this.theSystemController.removeUser(userName[2]);
