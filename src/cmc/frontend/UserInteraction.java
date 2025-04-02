@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import cmc.CMCException;
+import cmc.backend.AccountController;
 import cmc.backend.SystemController;
 import cmc.backend.User;
 import cmc.backend.entities.University;
@@ -14,6 +15,7 @@ public class UserInteraction {
 	private User loggedInUser;
 	
 	private SystemController theSystemController;
+	private AccountController acct;
 	
 	// Construct a UserInteraction using the basic (no parameter)
 	// SystemController as the single underlying controller object.
@@ -21,6 +23,7 @@ public class UserInteraction {
 	//       into multiple classes for better organization of functionalities.
 	public UserInteraction() {
 		this.theSystemController = new SystemController();
+		acct = new AccountController();
 		this.loggedInUser = null;
 	}
 
@@ -59,8 +62,8 @@ public class UserInteraction {
 	}
 	
 	// for admins, this gets the list of all users in the system
-	public Map<Integer, String[]> getAllUsers() {
-		return this.theSystemController.getAllUsers();
+	public List<String[]> getAllUsers() {
+		return acct.getAllUsers();
 	}
 	
 	// ask the admin for details and then attempt to add a user to the
@@ -86,14 +89,13 @@ public class UserInteraction {
 	// database
 	public boolean removeUser(Scanner s) {
 		
-		Map<Integer, String[]> allU = getAllUsers();
+		List<String[]> allU = getAllUsers();
 
-		for(Map.Entry<Integer, String[]> entry : allU.entrySet()) {
-			Integer key = entry.getKey();
-
-			String[] val = entry.getValue();
-
-			System.out.println(key + ". " + val[0]);	}
+		int len = allU.size();
+		for(int i = 0; i < len; i++) {
+			
+			System.out.println(i + ". " + allU.get(i)[0]);
+		}
  
 		System.out.print("Username number:");
  

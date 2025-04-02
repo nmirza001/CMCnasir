@@ -51,13 +51,6 @@ public class SystemController {
 			return theUser;
 		}
 	}
-
-	// this ADMIN ONLY method returns the list of all the users (and their data)
-	// TODO: shouldn't this return a List of User objects?
-	public Map<Integer, String[]> getAllUsers() {
-		Map<Integer, String[]> usersList = null;
-		return usersList;
-	}
 	
 	// this ADMIN ONLY method attempts to add a user to the database with the
 	// provided details
