@@ -17,7 +17,7 @@ import dblibrary.project.csci230.*;
  * 
  * @author Sally Sparrow
  */
-public class DatabaseController {
+public class DatabaseController implements AutoCloseable {
 	
 	/**
 	 * Used for when something shouldn't happen, i.e. a DB error when it should always work.
@@ -25,11 +25,21 @@ public class DatabaseController {
 	private static final String SHOULDNT_HAPPEN = "If you're seeing this DatabaseController has a bug.";
 	
 	private UniversityDBLibrary database;
+	private DBExtension sql;
 
 	// The default constructor that connects to the underlying
 	// UniversityDBLibrary object using your team's info.
 	public DatabaseController() {
-		this.database = new UniversityDBLibrary("dei", "Csci230$");
+		database = new UniversityDBLibrary("dei", "Csci230$");
+		sql = new DBExtension("dei", "Csci230$");
+		sql.connect();
+	}
+	
+	/**
+	 * Close connections to database.
+	 */
+	public void close() {
+		sql.close();
 	}
 
 	// add a user to the db
