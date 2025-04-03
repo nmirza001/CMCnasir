@@ -15,7 +15,6 @@ public class DBExtension implements AutoCloseable {
 	private String password;
 	
 	private Connection conn;
-	private Statement statement;
 	
 	/**
 	 * Creates the info to connect to the database.
@@ -34,20 +33,23 @@ public class DBExtension implements AutoCloseable {
 		}
 	}
 	
+	/**
+	 * Connects to the database.
+	 * Must be called before interacted with.
+	 */
 	public void connect() {
 		try {
 			String url = String.format(URL_F, username);
 			conn = DriverManager.getConnection(url, username, password);
-			
-			statement = conn.createStatement();
-			
-			test();
 		}
 		catch(SQLException e) {
 			throw new IllegalStateException(e);
 		}
 	}
 	
+	/**
+	 * Closes the database connection.
+	 */
 	public void close() {
 		try {
 			conn.close();
@@ -57,19 +59,22 @@ public class DBExtension implements AutoCloseable {
 		}
 	}
 	
-	private void test() {
+	public String getWebpageUrl(String uniName) {
 		try {
-			testInternal();
+			return getWebpageUrlInternal(uniName);
 		} catch(SQLException e) {
 			throw new IllegalStateException(e);
 		}
 	}
 	
-	public void testInternal() throws SQLException {
-		String sql = "SELECT * FROM University WHERE State = \"Texas\"";
+	private String getWebpageUrlInternal(String uniName) throws SQLException {
+		String sql = "SELECT WebpageUrl FROM UnivExt WHERE School = \"?\"";
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setString(1, uniName);
 		ResultSet resultSet = statement.executeQuery(sql);
 		resultSet.next();
-		String name = resultSet.getString("School");
+		String url = resultSet.getString("WebpageUrl");
+		return url;
 	}
 	
 }
