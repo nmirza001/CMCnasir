@@ -9,6 +9,7 @@ import java.sql.*;
  */
 public class DBExtension implements AutoCloseable {
 
+	private static final String NOT_CONN_MSG = "Call connect() before interacting with the database.";
 	// URL found in string in lib/UniversityDBLib.class
 	private static final String URL_F = "jdbc:mysql://cscimysqlsrv.csbsju.edu/%s";
 	private String username;
@@ -59,6 +60,11 @@ public class DBExtension implements AutoCloseable {
 		}
 	}
 	
+	/**
+	 * Gets the webpage URL for a specified university.
+	 * @param uniName Name of the university.
+	 * @return The webpage URL or {@code null} if it doesn't exist.
+	 */
 	public String getWebpageUrl(String uniName) {
 		try {
 			return getWebpageUrlInternal(uniName);
@@ -68,11 +74,17 @@ public class DBExtension implements AutoCloseable {
 	}
 	
 	private String getWebpageUrlInternal(String uniName) throws SQLException {
-		String sql = "SELECT WebpageUrl FROM UnivExt WHERE School = \"?\"";
+		if(uniName == null) throw new IllegalArgumentException();
+		if(conn == null) throw new IllegalStateException(NOT_CONN_MSG);
+		
+		String sql = "SELECT WebpageUrl FROM UnivExt WHERE School = ?";
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setString(1, uniName);
-		ResultSet resultSet = statement.executeQuery(sql);
-		resultSet.next();
+		ResultSet resultSet = statement.executeQuery();
+		
+		// If nothing found
+		if(!resultSet.next()) return null;
+		
 		String url = resultSet.getString("WebpageUrl");
 		return url;
 	}
