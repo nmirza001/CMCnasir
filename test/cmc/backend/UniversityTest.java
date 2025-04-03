@@ -18,19 +18,18 @@ import cmc.backend.entities.University;
  */
 public class UniversityTest {
 	
-	private UniversityController db;
+	private UniversityController uc;
 	private static final String NAME = "TEST SCHOOL NAME";
 	
 	private University getUni(String name) {
-		List<University> us = db.getAllSchools();
-		return University.find(us, name);
+		return uc.getUniversity(name);
 	}
 	
 	@Before
 	public void setUp() {
-		db = new UniversityController();
+		uc = new UniversityController();
 		University uni = new University(NAME);
-		boolean succ = db.addNewUniversity(uni);
+		boolean succ = uc.addNewUniversity(uni);
 		Assert.assertTrue(succ);
 	}
 	
@@ -38,16 +37,16 @@ public class UniversityTest {
 	public void tearDown() {
 		University u = getUni(NAME);
 		Assert.assertNotNull(u);
-		boolean succ = db.removeUniversity(u);
+		boolean succ = uc.removeUniversity(u);
 		Assert.assertTrue(succ);
-		db = null;
+		uc = null;
 	}
 	
 	@Test
 	public void testEditEmphasis() {
 		University initial = getUni(NAME);
 		initial.addEmphasis("LIBERAL ARTS");
-		db.editUniversity(initial);
+		uc.editUniversity(initial);
 		initial = null;
 		
 		// Add a emphasis
@@ -58,7 +57,7 @@ public class UniversityTest {
 		
 		// Remove an emphasis
 		later.removeEmphasis("LIBERAL ARTS");
-		db.editUniversity(later);
+		uc.editUniversity(later);
 		later = null;
 		
 		University fffinal = getUni(NAME);
@@ -69,8 +68,8 @@ public class UniversityTest {
 	public void deleteWithEmphasis() {
 		University u = new University("TEST SCHOOL NO 2");
 		u.addEmphasis("LIBERAL ARTS");
-		db.addNewUniversity(u);
-		boolean success = db.removeUniversity(u);
+		uc.addNewUniversity(u);
+		boolean success = uc.removeUniversity(u);
 		Assert.assertTrue(success);
 	}
 
