@@ -89,4 +89,58 @@ public class DBExtension implements AutoCloseable {
 		return url;
 	}
 	
+	/**
+	 * Sets the webpage URL for a specified university.
+	 * This will either insert or update accordingly.
+	 * @param uniName Name of the university.
+	 * @param url URL of webpage.
+	 */
+	public void setWebpageUrl(String uniName, String url) {
+		try {
+			setWebpageUrlInternal(uniName, url);
+		} catch(SQLException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+	
+	private void setWebpageUrlInternal(String uniName, String url) throws SQLException {
+		if(uniName == null) throw new IllegalArgumentException();
+		if(conn == null) throw new IllegalStateException(NOT_CONN_MSG);
+		
+		// First try update
+		String sql = "UPDATE UnivExt SET WebpageUrl = ? WHERE School = ?";
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setString(1, url);
+		statement.setString(2, uniName);
+		int affected = statement.executeUpdate();
+		if(affected > 0) return;
+		
+		// If it fails then insert
+		sql = "INSERT INTO UnivExt (School, WebpageUrl) VALUES (?, ?)";
+		statement = conn.prepareStatement(sql);
+		statement.setString(1, uniName);
+		statement.setString(2, url);
+		statement.executeUpdate();
+	}
+	
+	/**
+	 * Removes a university row and all its data.
+	 * @param uniName University name.
+	 * @return {@code true} if university was successfully deleted, that is,
+	 *         if a row in this DB existed.
+	 */
+	public boolean removeUniversityRow(String uniName) {
+		try {
+			if(uniName == null) throw new IllegalArgumentException();
+			if(conn == null) throw new IllegalStateException(NOT_CONN_MSG);
+			
+			String sql = "DELETE FROM UnivExt WHERE School = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, uniName);
+			return statement.executeUpdate() == 1;
+		} catch(SQLException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+	
 }

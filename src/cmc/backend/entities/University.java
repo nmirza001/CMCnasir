@@ -32,6 +32,8 @@ public class University {
 	
 	private final ArrayList<String> emphases = new ArrayList<>();
 	
+	private String webpageUrl;
+	
 	/**
 	 * Creates a university with a name and otherwise unknown information.
 	 * @param name The name of the university. Should be all caps and non-null.
@@ -309,6 +311,20 @@ public class University {
 		this.percentEnrolled = percentEnrolled;
 	}
 	
+	/**
+	 * @return the webpageUrl
+	 */
+	public String getWebpageUrl() {
+		return webpageUrl;
+	}
+
+	/**
+	 * @param webpageUrl the webpageUrl to set
+	 */
+	public void setWebpageUrl(String webpageUrl) {
+		this.webpageUrl = webpageUrl;
+	}
+
 	public void addEmphasis(String e) {
 		emphases.add(e);
 	}

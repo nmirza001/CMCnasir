@@ -14,10 +14,9 @@ import dblibrary.project.csci230.*;
 
 /**
  * The DatabaseController class is the primary interaction class with the
- * database library.  It currently just calls the lower-level methods and
- * forwards the result (possibly throwing some exceptions along the way).
- * 
- * @author Sally Sparrow
+ * database library.
+ * @author Roman Lefler
+ * @version Apr 4, 2025
  */
 public class DatabaseController implements AutoCloseable {
 	
@@ -27,21 +26,21 @@ public class DatabaseController implements AutoCloseable {
 	private static final String SHOULDNT_HAPPEN = "If you're seeing this DatabaseController has a bug.";
 	
 	private UniversityDBLibrary database;
-	private DBExtension sql;
+	private DBExtension dbext;
 
 	// The default constructor that connects to the underlying
 	// UniversityDBLibrary object using your team's info.
 	public DatabaseController() {
 		database = new UniversityDBLibrary("dei", "Csci230$");
-		sql = new DBExtension("dei", "Csci230$");
-		sql.connect();
+		dbext = new DBExtension("dei", "Csci230$");
+		dbext.connect();
 	}
 	
 	/**
 	 * Close connections to database.
 	 */
 	public void close() {
-		sql.close();
+		dbext.close();
 	}
 
 	// add a user to the db
@@ -208,6 +207,9 @@ public class DatabaseController implements AutoCloseable {
 		Map<String, List<String>> emphases = getUniversitiesEmphases();
 		ArrayList<University> result = new ArrayList<>();
 		for (String[] k : dbUniversityList) {
+			
+			String name = k[0];
+			
 			University u = new University(k[0]);
 			u.setState(k[1]);
 			u.setLocation(k[2]);
@@ -224,10 +226,13 @@ public class DatabaseController implements AutoCloseable {
 			u.setScaleAcademics(Integer.parseInt(k[13]));
 			u.setScaleSocial(Integer.parseInt(k[14]));
 			u.setScaleQualityOfLife(Integer.parseInt(k[15]));
-			List<String> schoolEmphases = emphases.get(k[0]);
+			List<String> schoolEmphases = emphases.get(name);
 			if(schoolEmphases != null) {
 				for(String e : schoolEmphases) u.addEmphasis(e);
 			}
+			
+			String webpageUrl = dbext.getWebpageUrl(name);
+			u.setWebpageUrl(webpageUrl);
 			
 			result.add(u);
 		}
@@ -298,8 +303,9 @@ public class DatabaseController implements AutoCloseable {
 	 * @version Mar 13, 2025
 	 */
 	public boolean addNewUniversity(University u) {
+		String name = u.getName();
 		int result = database.university_addUniversity(
-				u.getName(), u.getState(), u.getLocation(), u.getControl(),
+				name, u.getState(), u.getLocation(), u.getControl(),
 				u.getNumStudents(), u.getPercentFemale(), u.getSatVerbal(),
 				u.getSatMath(), u.getExpenses(), u.getPercentFinancialAid(),
 				u.getNumApplicants(), u.getPercentAdmitted(),
@@ -307,6 +313,8 @@ public class DatabaseController implements AutoCloseable {
 				u.getScaleSocial(), u.getScaleQualityOfLife());
 		
 		if(result != 1) return false;
+		
+		dbext.setWebpageUrl(name, u.getWebpageUrl());
 		
 		String uniName = u.getName();
 		for(String e : u.getEmphases()) {
@@ -342,8 +350,14 @@ public class DatabaseController implements AutoCloseable {
 			}
 		}
 		
-		int result = database.university_deleteUniversity(u.getName());
-		return result > 0;
+		int result = database.university_deleteUniversity(uniName);
+		if(result < 1) return false; 
+		
+		// The success of this doesn't matter since
+		// It could fail if there are no saved extra
+		// Attributes
+		dbext.removeUniversityRow(uniName);
+		return true;
 	}
 	
 	/**
@@ -393,7 +407,10 @@ public class DatabaseController implements AutoCloseable {
 				u.getPercentEnrolled(), u.getScaleAcademics(),
 				u.getScaleSocial(), u.getScaleQualityOfLife());
 		
-		return result == 1;
+		if(result < 1) return false;
+		
+		dbext.setWebpageUrl(uniName, u.getWebpageUrl());
+		return true;
 	}
 	
 }
