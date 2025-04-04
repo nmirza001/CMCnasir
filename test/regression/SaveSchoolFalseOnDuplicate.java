@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import cmc.CMCException;
 import cmc.backend.AccountController;
-import cmc.backend.DatabaseController;
+import cmc.backend.controllers.DatabaseController;
 import junit.framework.Assert;
 
 public class SaveSchoolFalseOnDuplicate {

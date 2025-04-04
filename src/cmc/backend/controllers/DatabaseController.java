@@ -1,4 +1,4 @@
-package cmc.backend;
+package cmc.backend.controllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import cmc.CMCException;
+import cmc.backend.DBExtension;
+import cmc.backend.UniversityController;
 import cmc.backend.entities.University;
 import dblibrary.project.csci230.*;
 
