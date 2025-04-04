@@ -1,4 +1,4 @@
-package regression;
+package cmc.regression;
 
 import static org.junit.Assert.*;
 
