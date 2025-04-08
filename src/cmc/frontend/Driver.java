@@ -10,7 +10,7 @@ import cmc.backend.entities.*;
 public class Driver {
 	
 	// the static UserInteraction object to use for all calls into CMC code
-	private static UserInteraction ui = new UserInteraction();
+	private static AdminInteraction ui = new AdminInteraction(null, null, null);
 	
 	// other classes should *not* instantiate this class.  It is "pure static".
 	private Driver() throws CMCException {
@@ -26,58 +26,6 @@ public class Driver {
 		System.out.println(dashes);
 		System.out.println(title);
 		System.out.println(dashes);
-	}
-	
-	private static void adminUserListMenu(Scanner s) {
-		printHeader("Admin User List");
-		
-		// TODO: it would be nice if this was refactored into a list of User objects...
-		List<String[]> allUsers = ui.getAllUsers();
-		for (String[] user : allUsers) {
-			System.out.println(user[2] + " | " + user[0] + " | " + user[1]);
-		}
-		System.out.println();
-		
-		int choice = ConsoleUtils.getMenuOption(s, Arrays.asList("Add User", "Remove User", "Go Back"));
-		
-		switch(choice) {
-		case 1:
-			if (!ui.addUser(s))
-				System.out.println("Failed to add new user.  (Username already exists?)");
-			break;
-		case 2:
-			if (!ui.removeUser(s))
-				System.out.println("Failed to remove user.  (Invalid username?)");
-			break;
-		case 3:
-			return;
-		default:
-			System.err.println("Internal error: Unsupported option.");
-			System.exit(1);
-		}
-	}
-	
-	private static void adminMenu(Scanner s) {
-		printHeader("Admin Menu");
-		
-		int choice = ConsoleUtils.getMenuOption(s, Arrays.asList("View List of Users",
-				"Universities", "Logout"));
-		
-		switch(choice) {
-		case 1:
-			adminUserListMenu(s);
-			break;
-		case 2:
-			AdminUniversityMenu uniMenu = new AdminUniversityMenu(ui);
-			uniMenu.prompt(s);
-			break;
-		case 3:
-			ui.logout();
-			break;
-		default:
-			System.err.println("Internal error: Unsupported option.");
-			System.exit(1);
-		}
 	}
 	
 	private static void searchResultsMenu(Scanner s, List<University> results) {
@@ -153,6 +101,29 @@ public class Driver {
 			System.out.println("Not implemented.");
 			break;
 		case 4:
+			ui.logout();
+			break;
+		default:
+			System.err.println("Internal error: Unsupported option.");
+			System.exit(1);
+		}
+	}
+	
+	private static void adminMenu(Scanner s) {
+		printHeader("Admin Menu");
+		
+		int choice = ConsoleUtils.getMenuOption(s, Arrays.asList("View List of Users",
+				"Universities", "Logout"));
+		
+		switch(choice) {
+		case 1:
+			adminMenu(s);
+			break;
+		case 2:
+			AdminUniversityMenu uniMenu = new AdminUniversityMenu(ui);
+			uniMenu.prompt(s);
+			break;
+		case 3:
 			ui.logout();
 			break;
 		default:

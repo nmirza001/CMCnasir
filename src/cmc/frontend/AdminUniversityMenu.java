@@ -14,9 +14,9 @@ import cmc.backend.entities.University;
  */
 public class AdminUniversityMenu {
 	
-	private final UserInteraction ui;
+	private final AdminInteraction ui;
 	
-	public AdminUniversityMenu(UserInteraction ui) {
+	public AdminUniversityMenu(AdminInteraction ui) {
 		this.ui = ui;
 	}
 	
