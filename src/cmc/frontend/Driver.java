@@ -10,7 +10,7 @@ import cmc.backend.entities.*;
 public class Driver {
 	
 	// the static UserInteraction object to use for all calls into CMC code
-	private static AdminInteraction ui = new AdminInteraction(null, null, null);
+	private static AdminInteraction ui = new AdminInteraction(null, null, null); //line 13 - modified AdminInteraction, feel free to change back Roman
 	
 	// other classes should *not* instantiate this class.  It is "pure static".
 	private Driver() throws CMCException {
@@ -117,7 +117,7 @@ public class Driver {
 		
 		switch(choice) {
 		case 1:
-			adminMenu(s);
+			adminMenu(s); //line 120 - modified AdminInteraction, feel free to change back Roman
 			break;
 		case 2:
 			AdminUniversityMenu uniMenu = new AdminUniversityMenu(ui);

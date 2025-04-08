@@ -27,6 +27,17 @@ public class AdminInteraction extends UserInteraction{
     
     //(1) - Adder & Subtracter methods
     
+    //accidentally deleted these - so I retyped them Roman
+    public boolean addNewUniversity(University uni){
+    	if (uni == null) throw new IllegalArgumentException();
+    	return theSystemController.addNewUniversity(uni);
+    }
+    
+    public boolean removeUniversity (University uni){
+    	if (uni == null) throw new IllegalArgumentException();
+    	return theSystemController.removeUniversity(uni);
+    }
+    
     // ask the admin for details and then attempt to add a user to the
  	// database
  	public boolean addUser(Scanner s) {
@@ -83,33 +94,6 @@ public class AdminInteraction extends UserInteraction{
   
  		return this.theSystemController.removeUser(userName[2]);
  	}
- 	
- 	/**
-	 * Adds a new university to the database.
-	 * @param uni University
-	 * @return {@code true} if the operation succeeded.
-	 * @throws IllegalArgumentException if uni is {@code null}.
-	 * @author Roman Lefler
-	 * @version Mar 13, 2025
-	 */
-	public boolean addNewUniversity(University uni) {
-		if(uni == null) throw new IllegalArgumentException();
-		return theSystemController.addNewUniversity(uni);
-	}
-	
-	/**
-	 * Removes a university from the database.
-	 * @param u University
-	 * @return {@code true} if the operation succeeded.
-	 * @throws IllegalArgumentException if u is {@code null}.
-	 * @author Roman Lefler
-	 * @version Mar 24, 2025
-	 */
-	public boolean removeUniversity(University u) {
-		if(u == null) throw new IllegalArgumentException();
-		return theSystemController.removeUniversity(u);
-	}
-
  	
  	
  	//(2) - Admin Viewer Methods
