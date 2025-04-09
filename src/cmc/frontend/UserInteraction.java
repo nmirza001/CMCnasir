@@ -1,5 +1,6 @@
 package cmc.frontend;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -69,7 +70,19 @@ public class UserInteraction {
 		System.out.print("State (leave blank to not search by this criterion): ");
 		String state = s.nextLine();
 		
-		return this.theSystemController.search(state);
+		System.out.print("Student Number (or leave empty): ");
+		String numStu = s.nextLine();
+		int dNumStu;
+		try {
+			dNumStu = numStu.isEmpty() ? -1 : Integer.parseInt(numStu);
+		}
+		catch(NumberFormatException e)
+		{
+			System.out.println("Invalid number.");
+			return new ArrayList<University>();
+		}
+		
+		return this.theSystemController.search(state, dNumStu);
 	}
 	
 	// ask for a school name to save, and attempt to save that school

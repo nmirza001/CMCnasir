@@ -72,14 +72,27 @@ public class SystemController {
 	
 	// this REGULAR USER ONLY method searches for schools in the database
 	// based on provided criteria (just state for now)
-	public List<University> search(String state) {
-		List<University> schoolList = this.myUC.getAllSchools();
-		
+	/**
+	 * Searches for schools with certain criteria.
+	 * @param state Exact state or empty string to ignore
+	 * @param stuNum Exact student number or -1 to ignore
+	 * @return A list of universities that match the given
+	 * 		   criteria.
+	 */
+	public List<University> search(String state, int stuNum) {
+		List<University> schoolList = myUC.getAllSchools();
 		List<University> filteredList = new ArrayList<>();
+		
 		for (int i = 0; i < schoolList.size(); i++) {
-			University school = schoolList.get(i);
-			if (state.equals("") || school.getState().equals(state) || school.getState() == "")
-				filteredList.add(school);
+			University uni = schoolList.get(i);
+			
+			boolean ignoreState = state.equals("");
+			if(!ignoreState && !uni.getState().equals(state)) continue;
+			
+			boolean ignoreStuNum = stuNum < 0;
+			if(!ignoreStuNum && uni.getNumStudents() != stuNum) continue;
+			
+			filteredList.add(uni);
 		}
 		
 		return filteredList;
