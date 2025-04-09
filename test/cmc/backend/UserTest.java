@@ -29,7 +29,7 @@ public class UserTest {
 		Assert.assertEquals(testFName, testUser.getFirstName());
 		Assert.assertEquals(testLName, testUser.getLastName());
 		// ...
-		Assert.assertEquals('Y', testUser.isActivated());
+		Assert.assertEquals(true, testUser.isActivated());
 	}
 
 	@Test
