@@ -17,7 +17,7 @@ public class DeactivatedUserCanStillLogin {
 
 	private static final String USERNAME = "test_test_test_acct";
 	private static final String PASSWD = "pass123$";
-	private static final User usr = new User(USERNAME, PASSWD, 'u', "Test", "Acct");
+	private static final User usr = new User(USERNAME, PASSWD, false, "Test", "Acct");
 	
 	private AccountController db;
 	

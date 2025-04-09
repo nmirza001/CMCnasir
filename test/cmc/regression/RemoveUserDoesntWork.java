@@ -18,7 +18,7 @@ public class RemoveUserDoesntWork {
 		AccountController ac = new AccountController();
 		SystemController sc = new SystemController();
 		
-		User u = new User(U_USER, PASSWD, 'u', "Admin", "McAdministrator");
+		User u = new User(U_USER, PASSWD, false, "Admin", "McAdministrator");
 		ac.addUser(u);
 		sc.saveSchool(U_USER, "BARD");
 		

@@ -38,7 +38,7 @@ public class SystemController {
 		if (u == null)
 			return null;
 		
-		if (!u.getActivated() || !u.password.equals(password)) {
+		if (!u.isActivated() || !u.password.equals(password)) {
 			return null;
 		}
 		else {

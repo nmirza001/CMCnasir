@@ -49,7 +49,7 @@ public class DatabaseController implements AutoCloseable {
 		int result = this.database.user_addUser(
 				u.getFirstName(), u.getLastName(),
 				u.getUsername(), u.getPassword(),
-				u.getType()
+				u.isAdmin() ? 'a' : 'u'
 		);
 		
 		if (result == -1) {
@@ -94,7 +94,7 @@ public class DatabaseController implements AutoCloseable {
 			if (thisUsername.equals(username)) {
 				char type = singleUser[4].length() > 0 ? singleUser[4].charAt(0) : 'u';
 				User u = new User(singleUser[2], singleUser[3],
-						type, singleUser[0], singleUser[1]);
+						type == 'a', singleUser[0], singleUser[1]);
 				u.setActivated(singleUser[5].length() != 1 || singleUser[5].equals("Y"));
 				return u;
 			}
@@ -114,7 +114,7 @@ public class DatabaseController implements AutoCloseable {
 			User u = new User(
 					user[2],
 					user[3],
-					type,
+					type == 'a',
 					user[0],
 					user[1]
 			);
@@ -138,8 +138,8 @@ public class DatabaseController implements AutoCloseable {
 				u.getFirstName(),
 				u.getLastName(),
 				u.getPassword(),
-				u.getType(),
-				u.getActivated() ? 'Y' : 'N'
+				u.isAdmin() ? 'a' : 'u',
+				u.isActivated() ? 'Y' : 'N'
 		);
 		
 		return result > 0;

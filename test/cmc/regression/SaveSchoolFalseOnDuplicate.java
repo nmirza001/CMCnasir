@@ -24,14 +24,14 @@ public class SaveSchoolFalseOnDuplicate {
 	public void setUp() throws CMCException {
 		db = new DatabaseController();
 		ac = new AccountController();
-		User u = new User(USERNAME, PASSWD, 'u', "lebron", "james");
+		User u = new User(USERNAME, PASSWD, false, "lebron", "james");
 		u.setActivated(false);
 		ac.addUser(u);
 	}
 	
 	@After
 	public void tearDown() throws CMCException {
-		User u = new User(USERNAME, PASSWD, 'u', "lebron", "james");
+		User u = new User(USERNAME, PASSWD, false, "lebron", "james");
 		ac.removeUser(u);
 	}
 	

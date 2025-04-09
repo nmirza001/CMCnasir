@@ -55,7 +55,7 @@ public class AdminInteraction extends UserInteraction{
  		if (s.nextLine().trim().equalsIgnoreCase("y"))
  			isAdmin = true;
  		
- 		User u = new User(username, password, isAdmin ? 'a' : 'u', firstName, lastName);
+ 		User u = new User(username, password, isAdmin, firstName, lastName);
  		return this.theSystemController.addUser(u);
  	}
  	

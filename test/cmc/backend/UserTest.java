@@ -10,7 +10,7 @@ public class UserTest {
 
 	private static String testUname = "testuname";
 	private static String testPass = "testpass";
-	private static char testType = 'u';
+	private static boolean testType = false;
 	private static String testFName = "Test";
 	private static String testLName = "AUser";
 
@@ -29,13 +29,13 @@ public class UserTest {
 		Assert.assertEquals(testFName, testUser.getFirstName());
 		Assert.assertEquals(testLName, testUser.getLastName());
 		// ...
-		Assert.assertEquals('Y', testUser.getActivated());
+		Assert.assertEquals('Y', testUser.isActivated());
 	}
 
 	@Test
 	public void testIsAdmin() {
 		Assert.assertFalse(testUser.isAdmin());
-		testUser.setType('a');
+		testUser.setIsAdmin(true);
 		Assert.assertTrue(testUser.isAdmin());
 	}
 

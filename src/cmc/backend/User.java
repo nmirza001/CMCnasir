@@ -3,7 +3,7 @@ package cmc.backend;
 public class User {
 	public final String username;
 	public String password;
-	public char type; // u or a
+	private boolean isAdmin;
 	public String firstName;
 	public String lastName;
 	private boolean activated;
@@ -12,15 +12,15 @@ public class User {
 	 * Create a new user.
 	 * @param username Username
 	 * @param password Password
-	 * @param type 'u' for user or 'a' for admin
+	 * @param isAdmin if user is admin
 	 * @param firstName first name
 	 * @param lastName last name
 	 */
-	public User(String username, String password, char type, String firstName,
+	public User(String username, String password, boolean isAdmin, String firstName,
 			String lastName) {
 		this.username = username;
 		this.password = password;
-		this.type = type;
+		this.isAdmin = isAdmin;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.activated = true; // users always start activated
@@ -52,21 +52,15 @@ public class User {
 	/**
 	 * @return the type
 	 */
-	public char getType() {
-		return type;
+	public boolean isAdmin() {
+		return isAdmin;
 	}
 
 	/**
-	 * @param type the type to set
+	 * @param isAdmin if the user should be an admin
 	 */
-	public void setType(char type) {
-		this.type = type;
-	}
-	
-	// return true if the user is an admin ('a') type,
-	// or false otherwise
-	public boolean isAdmin() {
-		return (type == 'a');
+	public void setIsAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 	/**
@@ -100,7 +94,7 @@ public class User {
 	/**
 	 * @return if activated
 	 */
-	public boolean getActivated() {
+	public boolean isActivated() {
 		return activated;
 	}
 
