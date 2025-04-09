@@ -1,7 +1,7 @@
 package cmc.backend;
 
 public class User {
-	public String username;
+	public final String username;
 	public String password;
 	public char type; // u or a
 	public String firstName;
