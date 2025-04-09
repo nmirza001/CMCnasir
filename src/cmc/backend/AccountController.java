@@ -42,14 +42,6 @@ public class AccountController {
 		return db.removeUser(u);
 	}
 	
-	// deactivate a user in the database
-	// This is messy, and it would be much cleaner to do
-	// an editUser with an updated User object!
-	public boolean deactivateUser(String username) throws CMCException {
-		
-		return db.deactivateUser(username);
-	}
-	
 	// get the list of all the users in the DB
 	public List<User> getAllUsers() {
 		

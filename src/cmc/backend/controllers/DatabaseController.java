@@ -125,27 +125,26 @@ public class DatabaseController implements AutoCloseable {
 		return result;
 	}
 	
-
-	// deactivate a user in the database
-	// This is messy, and it would be much cleaner to do
-	// an editUser with an updated User object!
-	public boolean deactivateUser(String username) throws CMCException {
-		User u = getUser(username);
-		if (u == null)
-			return false;
-		int result = this.database.user_editUser(
-				u.getUsername(), u.getFirstName(), u.getLastName(),
-				u.getPassword(), u.getType(), u.getActivated()
+	/**
+	 * Updates the database with the given
+	 * user object.
+	 * @param u User to update
+	 * @return {@code true} if successful
+	 */
+	public boolean editUser(User u) {
+		
+		int result = database.user_editUser(
+				u.getUsername(),
+				u.getFirstName(),
+				u.getLastName(),
+				u.getPassword(),
+				u.getType(),
+				u.getActivated()
 		);
 		
-		if (result == -1) {
-			throw new CMCException("Error editing user (to deactivate) in the DB");
-		}
-		else {
-			return true;
-		}
+		return result > 0;
 	}
-	
+
 	// save a school to a particular user's list
 	// TODO: It feels like we should be able to do this as part of
 	//       "updating" a user in the DB.

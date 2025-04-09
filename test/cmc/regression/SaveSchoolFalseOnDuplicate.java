@@ -3,6 +3,7 @@ package cmc.regression;
 import static org.junit.Assert.*;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +11,6 @@ import cmc.CMCException;
 import cmc.backend.AccountController;
 import cmc.backend.User;
 import cmc.backend.controllers.DatabaseController;
-import junit.framework.Assert;
 
 public class SaveSchoolFalseOnDuplicate {
 
@@ -25,8 +25,8 @@ public class SaveSchoolFalseOnDuplicate {
 		db = new DatabaseController();
 		ac = new AccountController();
 		User u = new User(USERNAME, PASSWD, 'u', "lebron", "james");
+		u.setActivated('N');
 		ac.addUser(u);
-		ac.deactivateUser(USERNAME);
 	}
 	
 	@After
