@@ -254,6 +254,8 @@ public class DatabaseController implements AutoCloseable {
 			
 			String webpageUrl = dbext.getWebpageUrl(name);
 			u.setWebpageUrl(webpageUrl);
+			String imageUrl = dbext.getImageUrl(name);
+			u.setImageUrl(imageUrl);
 			
 			result.add(u);
 		}
@@ -336,6 +338,7 @@ public class DatabaseController implements AutoCloseable {
 		if(result != 1) return false;
 		
 		dbext.setWebpageUrl(name, u.getWebpageUrl());
+		dbext.setImageUrl(name, u.getImageUrl());
 		
 		String uniName = u.getName();
 		for(String e : u.getEmphases()) {
@@ -431,6 +434,7 @@ public class DatabaseController implements AutoCloseable {
 		if(result < 1) return false;
 		
 		dbext.setWebpageUrl(uniName, u.getWebpageUrl());
+		dbext.setImageUrl(uniName, u.getImageUrl());
 		return true;
 	}
 	

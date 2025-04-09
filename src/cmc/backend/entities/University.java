@@ -33,6 +33,7 @@ public class University {
 	private final ArrayList<String> emphases = new ArrayList<>();
 	
 	private String webpageUrl;
+	private String imageUrl;
 	
 	/**
 	 * Creates a university with a name and otherwise unknown information.
@@ -323,6 +324,20 @@ public class University {
 	 */
 	public void setWebpageUrl(String webpageUrl) {
 		this.webpageUrl = webpageUrl;
+	}
+
+	/**
+	 * @return the imageUrl
+	 */
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	/**
+	 * @param imageUrl the imageUrl to set
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public void addEmphasis(String e) {
