@@ -11,7 +11,10 @@ import org.junit.runner.RunWith;
 	cmc.regression.DeactivatedUserCanStillLogin.class,
 	cmc.regression.RemoveUserDoesntWork.class,
 	cmc.regression.SaveSchoolFalseOnDuplicate.class,
-	cmc.regression.SystemControllerSearchWoState.class
+	cmc.regression.SystemControllerSearchWoState.class,
+	
+	cmc.userstory.UserLoginTest.class,
+	cmc.userstory.UniversitySearchTest.class
 })
 public class AllTests {
 
