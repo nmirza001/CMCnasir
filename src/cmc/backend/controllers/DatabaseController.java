@@ -56,7 +56,9 @@ public class DatabaseController implements AutoCloseable {
 			throw new CMCException("Error adding user to the DB");
 		}
 		else {
-			return true;
+			// No way to create deactivated user
+			if(u.isActivated()) return true;
+			else return editUser(u);
 		}
 	}
 
