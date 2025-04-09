@@ -25,7 +25,7 @@ public class SaveSchoolFalseOnDuplicate {
 		db = new DatabaseController();
 		ac = new AccountController();
 		User u = new User(USERNAME, PASSWD, 'u', "lebron", "james");
-		u.setActivated('N');
+		u.setActivated(false);
 		ac.addUser(u);
 	}
 	

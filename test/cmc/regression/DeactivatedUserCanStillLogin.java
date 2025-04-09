@@ -24,7 +24,7 @@ public class DeactivatedUserCanStillLogin {
 	@Before
 	public void setUp() throws CMCException {
 		db = new AccountController();
-		usr.setActivated('N');
+		usr.setActivated(false);
 		db.addUser(usr);
 	}
 	

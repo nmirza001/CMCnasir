@@ -6,7 +6,7 @@ public class User {
 	public char type; // u or a
 	public String firstName;
 	public String lastName;
-	public char activated; // Y or N
+	private boolean activated;
 
 	/**
 	 * Create a new user.
@@ -23,7 +23,7 @@ public class User {
 		this.type = type;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.activated = 'Y'; // users always start activated
+		this.activated = true; // users always start activated
 	}
 	
 	/**
@@ -98,17 +98,17 @@ public class User {
 	}
 
 	/**
-	 * @return the activated
+	 * @return if activated
 	 */
-	public char getActivated() {
+	public boolean getActivated() {
 		return activated;
 	}
 
 	/**
-	 * @param activated the activated to set
+	 * @param if activated to set
 	 */
-	public void setActivated(char activated) {
-		this.activated = activated;
+	public void setActivated(boolean isActivated) {
+		this.activated = isActivated;
 	}
 
 }
