@@ -17,7 +17,7 @@ import cmc.backend.entities.University;
  * @author Roman Lefler
  * @version Mar 15, 2024
  */
-public class UniversityTest {
+public class UniversityControllerTest {
 	
 	private UniversityController uc;
 	private String name1;

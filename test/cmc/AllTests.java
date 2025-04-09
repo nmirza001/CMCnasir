@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	cmc.backend.UniversityTest.class,
+	cmc.backend.UniversityControllerTest.class,
 	cmc.backend.UserTest.class,
 	
 	cmc.regression.DeactivatedUserCanStillLogin.class,
