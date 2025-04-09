@@ -32,6 +32,7 @@ public class UniversityTest {
 		
 		Random rand = new Random();
 		name1 = "TEST SCHOOL " + rand.nextInt();
+		// No 2 will only be added and removed in test methods
 		name2 = "TEST SCHOOL NO 2 " + rand.nextInt();
 		
 		uc = new UniversityController();
@@ -83,14 +84,19 @@ public class UniversityTest {
 	@Test
 	public void editWithExtendedTable() {
 		final String LEBRON = "https://lebronjames.com";
-		
+		final String LEIMAGE =
+				"https://upload.wikimedia.org/wikipedia/commons/a/a7/LeBron_James_Lakers.jpg";
+;		
 		University initial = getUni(name1);
 		initial.setWebpageUrl(LEBRON);
-		uc.editUniversity(initial);
+		initial.setImageUrl(LEIMAGE);
+		boolean editSuccess = uc.editUniversity(initial);
+		Assert.assertTrue(editSuccess);
 		initial = null;
 		
 		University after = getUni(name1);
 		Assert.assertEquals(LEBRON, after.getWebpageUrl());
+		Assert.assertEquals(LEIMAGE, after.getImageUrl());
 	}
 
 }
