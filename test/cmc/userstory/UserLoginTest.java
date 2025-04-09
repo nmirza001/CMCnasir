@@ -26,7 +26,7 @@ public class UserLoginTest {
 
 	private UserInteraction ui;
 	private DatabaseController db;
-	private User usr = new User("testuser", "passwd", 'u', "Bron", "Jimmy");
+	private User usr = new User("testuser", "passwd", false, "Bron", "Jimmy");
 	
 	@Before
 	public void setUp() throws CMCException {
