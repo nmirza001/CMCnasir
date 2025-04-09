@@ -122,6 +122,69 @@ public class DBExtension implements AutoCloseable {
 		statement.setString(2, url);
 		statement.executeUpdate();
 	}
+
+	/**
+	 * Gets the image URL for a specified university.
+	 * @param uniName Name of the university.
+	 * @return The image URL or {@code null} if it doesn't exist.
+	 */
+	public String getImageUrl(String uniName) {
+		try {
+			return getImageUrlInternal(uniName);
+		} catch(SQLException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+	
+	private String getImageUrlInternal(String uniName) throws SQLException {
+		if(uniName == null) throw new IllegalArgumentException();
+		if(conn == null) throw new IllegalStateException(NOT_CONN_MSG);
+		
+		String sql = "SELECT ImageUrl FROM UnivExt WHERE School = ?";
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setString(1, uniName);
+		ResultSet resultSet = statement.executeQuery();
+		
+		// If nothing found
+		if(!resultSet.next()) return null;
+		
+		String url = resultSet.getString("ImageUrl");
+		return url;
+	}
+	
+	/**
+	 * Sets the image URL for a specified university.
+	 * This will either insert or update accordingly.
+	 * @param uniName Name of the university.
+	 * @param url URL of image.
+	 */
+	public void setImageUrl(String uniName, String url) {
+		try {
+			setImageUrlInternal(uniName, url);
+		} catch(SQLException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+	
+	private void setImageUrlInternal(String uniName, String url) throws SQLException {
+		if(uniName == null) throw new IllegalArgumentException();
+		if(conn == null) throw new IllegalStateException(NOT_CONN_MSG);
+		
+		// First try update
+		String sql = "UPDATE UnivExt SET WebpageUrl = ? WHERE School = ?";
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setString(1, url);
+		statement.setString(2, uniName);
+		int affected = statement.executeUpdate();
+		if(affected > 0) return;
+		
+		// If it fails then insert
+		sql = "INSERT INTO UnivExt (School, WebpageUrl) VALUES (?, ?)";
+		statement = conn.prepareStatement(sql);
+		statement.setString(1, uniName);
+		statement.setString(2, url);
+		statement.executeUpdate();
+	}
 	
 	/**
 	 * Removes a university row and all its data.

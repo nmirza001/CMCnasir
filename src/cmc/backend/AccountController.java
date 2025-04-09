@@ -31,16 +31,15 @@ public class AccountController {
 	// TODO: it would be nice if this could take a User object instead
 	// (so "higher-abstraction" classes don't have to worry about the order
 	//  of properties)
-	public boolean addUser(String username, String password, char type,
-			String firstName, String lastName) throws CMCException {
+	public boolean addUser(User u) throws CMCException {
 		
-		return db.addUser(username, password, type, firstName, lastName);
+		return db.addUser(u);
 	}
 
 	// remove a user from the db
-	public boolean removeUser(String username) throws CMCException {
+	public boolean removeUser(User u) throws CMCException {
 		
-		return db.removeUser(username);
+		return db.removeUser(u);
 	}
 	
 	// deactivate a user in the database
@@ -52,7 +51,7 @@ public class AccountController {
 	}
 	
 	// get the list of all the users in the DB
-	public List<String[]> getAllUsers() {
+	public List<User> getAllUsers() {
 		
 		return db.getAllUsers();
 	}

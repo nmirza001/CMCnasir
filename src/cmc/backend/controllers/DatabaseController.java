@@ -9,6 +9,7 @@ import java.util.Set;
 import cmc.CMCException;
 import cmc.backend.DBExtension;
 import cmc.backend.UniversityController;
+import cmc.backend.User;
 import cmc.backend.entities.University;
 import dblibrary.project.csci230.*;
 
@@ -44,12 +45,12 @@ public class DatabaseController implements AutoCloseable {
 	}
 
 	// add a user to the db
-	// TODO: it would be nice if this could take a User object instead
-	// (so "higher-abstraction" classes don't have to worry about the order
-	//  of properties)
-	public boolean addUser(String username, String password, char type,
-			String firstName, String lastName) throws CMCException {
-		int result = this.database.user_addUser(firstName, lastName, username, password, type);
+	public boolean addUser(User u) throws CMCException {
+		int result = this.database.user_addUser(
+				u.getFirstName(), u.getLastName(),
+				u.getUsername(), u.getPassword(),
+				u.getType()
+		);
 		
 		if (result == -1) {
 			throw new CMCException("Error adding user to the DB");
@@ -61,7 +62,9 @@ public class DatabaseController implements AutoCloseable {
 
 	
 	// remove a user from the db
-	public boolean removeUser(String username) throws CMCException {
+	public boolean removeUser(User u) throws CMCException {
+		
+		String username = u.getUsername();
 		
 		Map<String, List<String>> schoolMap = getUserSavedSchoolMap();
 		List<String> schools = schoolMap.get(username);
@@ -83,13 +86,17 @@ public class DatabaseController implements AutoCloseable {
 
 	
 	// get a user; null if not in DB
-	public String[] getUser(String username) {
+	public User getUser(String username) {
 		String[][] databaseUserStrings = this.database.user_getUsers();
 		
 		for (String[] singleUser : databaseUserStrings) {
 			String thisUsername = singleUser[2];
 			if (thisUsername.equals(username)) {
-				return singleUser;
+				char type = singleUser[4].length() > 0 ? singleUser[4].charAt(0) : 'u';
+				User u = new User(singleUser[2], singleUser[3],
+						type, singleUser[0], singleUser[1]);
+				u.setActivated(singleUser[5].length() != 1 || singleUser[5].equals("N") ? 'Y' : 'N');
+				return u;
 			}
 		}
 		
@@ -98,12 +105,21 @@ public class DatabaseController implements AutoCloseable {
 
 
 	// get the list of all the users in the DB
-	public List<String[]> getAllUsers() {
+	public List<User> getAllUsers() {
 		String[][] dbUserList = this.database.user_getUsers();
 		
-		ArrayList<String[]> result = new ArrayList<String[]>();
+		ArrayList<User> result = new ArrayList<User>();
 		for (String[] user : dbUserList) {
-			result.add(user);
+			char type = user[4].length() > 0 ? user[4].charAt(0) : 'u';
+			User u = new User(
+					user[2],
+					user[3],
+					type,
+					user[0],
+					user[1]
+			);
+			u.setActivated(user[5].length() != 1 || user[5].equals("N") ? 'Y' : 'N');
+			result.add(u);
 		}
 		
 		return result;
@@ -114,10 +130,14 @@ public class DatabaseController implements AutoCloseable {
 	// This is messy, and it would be much cleaner to do
 	// an editUser with an updated User object!
 	public boolean deactivateUser(String username) throws CMCException {
-		String[] theUser = getUser(username);
-		if (theUser == null)
+		User u = getUser(username);
+		if (u == null)
 			return false;
-		int result = this.database.user_editUser(theUser[2], theUser[0], theUser[1], theUser[3], theUser[4].charAt(0), 'N');
+		int result = this.database.user_editUser(
+				u.getUsername(), u.getFirstName(), u.getLastName(),
+				u.getPassword(), u.getType(), u.getActivated()
+		);
+		
 		if (result == -1) {
 			throw new CMCException("Error editing user (to deactivate) in the DB");
 		}

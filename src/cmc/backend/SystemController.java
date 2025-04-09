@@ -34,32 +34,23 @@ public class SystemController {
 	 * @throws CMCException
 	 */
 	public User login(String username, String password) throws CMCException {
-		String[] userData = this.myDBController.getUser(username);
-		if (userData == null)
+		User u = this.myDBController.getUser(username);
+		if (u == null)
 			return null;
 		
-		User theUser = new User(userData[2], userData[3], userData[4].charAt(0), userData[0],
-				userData[1]);
-		
-		String status = userData[5];
-		if(status.length() != 1) throw new CMCException("User status in DB malformed.");
-		theUser.setActivated(status.charAt(0));
-		
-		if (theUser.activated != 'Y' || !theUser.password.equals(password)) {
+		if (u.activated != 'Y' || !u.password.equals(password)) {
 			return null;
 		}
 		else {
-			return theUser;
+			return u;
 		}
 	}
 	
 	// this ADMIN ONLY method attempts to add a user to the database with the
 	// provided details
-	public boolean addUser(String username, String password,
-			String firstName, String lastName, boolean isAdmin) {
-		char type = (isAdmin ? 'a' : 'u');
+	public boolean addUser(User u) {
 		try {
-			return this.myAC.addUser(username, password, type, firstName, lastName);
+			return this.myAC.addUser(u);
 		} catch (CMCException e) {
 			// TODO: should we let the calling class report the error more
 			//       clearly by passing it on?
@@ -69,9 +60,9 @@ public class SystemController {
 	
 	// this ADMIN ONLY method attempts to remove a user from the database
 	// based on the provided username
-	public boolean removeUser(String username) {
+	public boolean removeUser(User u) {
 		try {
-			return this.myAC.removeUser(username);
+			return this.myAC.removeUser(u);
 		} catch (CMCException e) {
 			// TODO: should we let the calling class report the error more
 			//       clearly by passing it on?

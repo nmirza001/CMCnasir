@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import cmc.backend.AccountController;
 import cmc.backend.UniversityController;
+import cmc.backend.User;
 import cmc.backend.entities.University;
 import cmc.CMCException;
 import cmc.backend.SystemController;
@@ -54,19 +55,20 @@ public class AdminInteraction extends UserInteraction{
  		if (s.nextLine().trim().equalsIgnoreCase("y"))
  			isAdmin = true;
  		
- 		return this.theSystemController.addUser(username, password, firstName, lastName, isAdmin);
+ 		User u = new User(username, password, isAdmin ? 'a' : 'u', firstName, lastName);
+ 		return this.theSystemController.addUser(u);
  	}
  	
  // ask the admin for a username and then remove that user from the
  	// database
  	public boolean removeUser(Scanner s) {
  		
- 		List<String[]> allU = getAllUsers();
+ 		List<User> allU = getAllUsers();
 
  		int len = allU.size();
  		// List starts at 1
  		for(int i = 0; i < len; i++) {
- 			String msg = String.format("%d. %s", i + 1, allU.get(i)[0]);
+ 			String msg = String.format("%d. %s", i + 1, allU.get(i).getUsername());
  			System.out.println(msg);
  		}
   
@@ -89,17 +91,16 @@ public class AdminInteraction extends UserInteraction{
  		}
  		
  		// Shift everything by 1 since list starts at 1
- 		String[] userName = allU.get(usernum - 1);
+ 		User u = allU.get(usernum - 1);
  		
-  
- 		return this.theSystemController.removeUser(userName[2]);
+ 		return this.theSystemController.removeUser(u);
  	}
  	
  	
  	//(2) - Admin Viewer Methods
  	
     // for admins, this gets the list of all users in the system
- 	public List<String[]> getAllUsers() {
+ 	public List<User> getAllUsers() {
  		return acct.getAllUsers();
  	}
  	

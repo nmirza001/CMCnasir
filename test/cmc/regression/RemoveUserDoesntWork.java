@@ -2,10 +2,10 @@ package cmc.regression;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import cmc.backend.*;
-import junit.framework.Assert;
 import cmc.*;
 
 public class RemoveUserDoesntWork {
@@ -18,10 +18,11 @@ public class RemoveUserDoesntWork {
 		AccountController ac = new AccountController();
 		SystemController sc = new SystemController();
 		
-		ac.addUser(U_USER, PASSWD, 'u', "Admin", "McAdministrator");
+		User u = new User(U_USER, PASSWD, 'u', "Admin", "McAdministrator");
+		ac.addUser(u);
 		sc.saveSchool(U_USER, "BARD");
 		
-		boolean succ = ac.removeUser(U_USER);
+		boolean succ = ac.removeUser(u);
 		Assert.assertTrue(succ);
 
 				

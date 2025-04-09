@@ -8,6 +8,14 @@ public class User {
 	public String lastName;
 	public char activated; // Y or N
 
+	/**
+	 * Create a new user.
+	 * @param username Username
+	 * @param password Password
+	 * @param type 'u' for user or 'a' for admin
+	 * @param firstName first name
+	 * @param lastName last name
+	 */
 	public User(String username, String password, char type, String firstName,
 			String lastName) {
 		this.username = username;
