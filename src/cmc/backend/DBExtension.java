@@ -113,7 +113,8 @@ public class DBExtension implements AutoCloseable {
 		statement.setString(1, url);
 		statement.setString(2, uniName);
 		int affected = statement.executeUpdate();
-		if(affected > 0) return;
+		// If it works or url is blank return
+		if(affected > 0 || url == null) return;
 		
 		// If it fails then insert
 		sql = "INSERT INTO UnivExt (School, WebpageUrl) VALUES (?, ?)";
@@ -171,15 +172,16 @@ public class DBExtension implements AutoCloseable {
 		if(conn == null) throw new IllegalStateException(NOT_CONN_MSG);
 		
 		// First try update
-		String sql = "UPDATE UnivExt SET WebpageUrl = ? WHERE School = ?";
+		String sql = "UPDATE UnivExt SET ImageUrl = ? WHERE School = ?";
 		PreparedStatement statement = conn.prepareStatement(sql);
 		statement.setString(1, url);
 		statement.setString(2, uniName);
 		int affected = statement.executeUpdate();
+		// If it works or url is blank return
 		if(affected > 0) return;
 		
 		// If it fails then insert
-		sql = "INSERT INTO UnivExt (School, WebpageUrl) VALUES (?, ?)";
+		sql = "INSERT INTO UnivExt (School, ImageUrl) VALUES (?, ?)";
 		statement = conn.prepareStatement(sql);
 		statement.setString(1, uniName);
 		statement.setString(2, url);
