@@ -1,6 +1,6 @@
 package cmc.backend;
 
-public class User {
+public class User implements Cloneable {
 	public final String username;
 	public String password;
 	private boolean isAdmin;
@@ -109,4 +109,19 @@ public class User {
 	public String toString(){
 		return ("Username: " +  username + ", Name: " + firstName + " " + lastName + (isAdmin ? "(Admin)": ""));
 	}
+	
+	public Object clone() {
+		User u = new User(username, password, isAdmin, firstName, lastName);
+		u.setActivated(activated);
+		return u;
+	}
+	
+	/**
+	 * Same as {@link #clone()} but casted to a User.
+	 * @return A clone of the user object.
+	 */
+	public User uClone() {
+		return (User)clone();
+	}
+	
 }
