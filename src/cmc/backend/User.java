@@ -104,5 +104,9 @@ public class User {
 	public void setActivated(boolean isActivated) {
 		this.activated = isActivated;
 	}
-
+	
+	@Override
+	public String toString(){
+		return ("Username: " +  username + ", Name: " + firstName + " " + lastName + (isAdmin ? "(Admin)": ""));
+	}
 }

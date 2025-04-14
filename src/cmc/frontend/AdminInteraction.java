@@ -10,6 +10,7 @@ import cmc.CMCException;
 import cmc.backend.SystemController;
 
 public class AdminInteraction extends UserInteraction{
+	@SuppressWarnings("unused")
 	private final UniversityController theUniversityController;
 	
 	
@@ -63,12 +64,12 @@ public class AdminInteraction extends UserInteraction{
  	// database
  	public boolean removeUser(Scanner s) {
  		
- 		List<User> allU = getAllUsers();
+ 		List<User> allUsers = getAllUsers();
 
- 		int len = allU.size();
+ 		int len = allUsers.size();
  		// List starts at 1
  		for(int i = 0; i < len; i++) {
- 			String msg = String.format("%d. %s", i + 1, allU.get(i).getUsername());
+ 			String msg = String.format("%d. %s", i + 1, allUsers.get(i).getUsername());
  			System.out.println(msg);
  		}
   
@@ -86,12 +87,12 @@ public class AdminInteraction extends UserInteraction{
  		}
   
  		// List starts at 1 so zero is not a valid option
- 		if(usernum <= 0 || usernum >= allU.size()) {
+ 		if(usernum <= 0 || usernum >= allUsers.size()) {
  			return false;
  		}
  		
  		// Shift everything by 1 since list starts at 1
- 		User u = allU.get(usernum - 1);
+ 		User u = allUsers.get(usernum - 1);
  		
  		return this.theSystemController.removeUser(u);
  	}

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import cmc.*;
+import cmc.backend.User;
 import cmc.backend.entities.*;
 
 public class Driver {
@@ -117,7 +118,7 @@ public class Driver {
 		
 		switch(choice) {
 		case 1:
-			adminMenu(s); //line 120 - modified AdminInteraction, feel free to change back Roman
+			adminUserListMenu(s); //line 120 - modified AdminInteraction, feel free to change back Roman
 			break;
 		case 2:
 			AdminUniversityMenu uniMenu = new AdminUniversityMenu(ui);
@@ -161,6 +162,35 @@ public class Driver {
 				adminMenu(s);
 			else
 				regularUserMenu(s);
+		}
+	}
+	
+	public static void adminUserListMenu(Scanner s){
+		printHeader("Admin User List");
+		
+		List<User> allUsers = ui.getAllUsers();
+		
+		for (User user: allUsers){
+			System.out.println(user.getUsername().toString());
+		}
+		System.out.println();
+		
+		int choice = ConsoleUtils.getMenuOption(s, Arrays.asList("Add User", "Remove User", "Go back"));
+		
+		switch (choice){
+		case 1:
+			if (!ui.addUser(s))
+				System.out.println("Failed to add new user. (Username already exists?)");
+			break;
+		case 2:
+			if (!ui.removeUser(s))
+				System.out.println("Failed to remove user. (Invalid username?)");
+			break;
+		case 3:
+			return;
+		default:
+			System.err.print("Internal error: Unsupported option.");
+			System.exit(1);
 		}
 	}
 
