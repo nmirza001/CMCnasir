@@ -72,17 +72,20 @@ public class SystemController {
 		}
 	}
 	
-	// this ADMIN ONLY method attempts to remove a user from the database
-	// based on the provided username
-		public boolean deactivateUser(User u) {
-			try {
-				return this.myAC.deactivateUser(u);
-			} catch (CMCException e) {
-				// TODO: should we let the calling class report the error more
-				//       clearly by passing it on?
-				return false;
-			}
+	/**
+	 * Admin only method to deactivate a user
+	 * @param User u gets the user to deactivate
+	 * @return returns true if deactivated and false if not deactivated
+	 * @author tflynn001
+	 * Version April 14, 2025
+	 */
+	public boolean deactivateUser(User u) {
+		try {
+			return this.myAC.deactivateUser(u);
+		} catch (CMCException e) {
+			return false;
 		}
+	}
 	
 	/**
 	 * Gets the SearchController for performing university searches.

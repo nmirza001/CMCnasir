@@ -175,7 +175,7 @@ public class Driver {
 		}
 		System.out.println();
 		
-		int choice = ConsoleUtils.getMenuOption(s, Arrays.asList("Add User", "Remove User", "Deactivate User", "Go back"));
+		int choice = ConsoleUtils.getMenuOption(s, Arrays.asList("Add User", "Remove User", "Deactivate User", "Search For User", "Go back"));
 		
 		switch (choice){
 		case 1:
@@ -191,6 +191,10 @@ public class Driver {
 				System.out.println("Failed to deactivate user. (Invalid username?)");
 			break;
 		case 4:
+			if (!ui.searchUsers(s))
+				System.out.println("No user found. (Invalid username?)");
+			break;
+		case 5:
 			return;
 		default:
 			System.err.print("Internal error: Unsupported option.");
