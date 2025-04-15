@@ -92,6 +92,11 @@ public class Driver {
 		case 3:
 			System.out.println("enter school name to view: ");
 			String schoolName = s.nextLine();
+			
+			if (schoolName != schoolName.toUpperCase()) {
+				schoolName = schoolName.toUpperCase(); //no need to type upper
+			}
+			
 			String schoolInfo = ui.getUniversityDetails(schoolName);
 			System.out.println("\n" + schoolName + "'s information: ");
 			System.out.println(schoolInfo);
