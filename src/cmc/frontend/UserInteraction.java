@@ -135,17 +135,7 @@ public class UserInteraction {
 	 * @author Rick Masaana
 	 * 3/25/2025
 	 */
-	public University getUniversityDetails (String schoolName){
-		List<University> allSchools = theSystemController.getAllUniversities();
-		
-		//iterate through list using University list
-		for (University school : allSchools) {
-			
-			//confirm that named school exists
-			if (school.getName().equals(schoolName)){
-				return school; //return the school info
-			}
-		}
-		return null; //else null
+	public String getUniversityDetails (String schoolName){
+		return theSystemController.viewSchool(schoolName);
 	}
 }

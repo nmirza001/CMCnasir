@@ -20,12 +20,6 @@ public class AdminInteraction extends UserInteraction{
 	
 	//(0) - display methods
 	
-	public void displayAdminMenu(){
-		
-	}
-    public void handleUserManagement(){
-		
-	}
     
     //(1) - Adder & Subtracter methods
     
@@ -60,7 +54,7 @@ public class AdminInteraction extends UserInteraction{
  		return this.theSystemController.addUser(u);
  	}
  	
- // ask the admin for a username and then remove that user from the
+    // ask the admin for a username and then remove that user from the
  	// database
  	public boolean removeUser(Scanner s) {
  		
@@ -113,34 +107,6 @@ public class AdminInteraction extends UserInteraction{
  	
  	
  	//(4) - Admin Function Formatter Methods
- 	
-	/*
-	 * string builder for formating University details
-	 * University university
-	 * @author Rick Masaana
-	 * 3/25/2025
-	 */
-	public String formatUniversityDetails(University university){
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("Name: ").append(university.getName()).append("\n");
-		sb.append("State: ").append(university.getState()).append("\n");
-		sb.append("Location: ").append(university.getLocation()).append("\n");
-		sb.append("Control: ").append(university.getControl()).append("\n");
-		sb.append("Number of Students: ").append(university.getNumStudents()).append("\n");
-		sb.append("Percent female: ").append(university.getPercentFemale()).append("\n");
-		sb.append("SAT Verbal: ").append(university.getSatVerbal()).append("\n");
-		sb.append("SAT Math: ").append(university.getSatMath()).append("\n");
-		sb.append("expenses: ").append(university.getExpenses()).append("\n");
-		sb.append("Percent Financial Aid: ").append(university.getPercentFinancialAid()).append("\n");
-		sb.append("Applicants: ").append(university.getNumApplicants()).append("\n");
-		sb.append("Percent Admitted: ").append(university.getPercentAdmitted()).append("\n");
-		sb.append("Percent Enrolled: ").append(university.getPercentEnrolled()).append("\n");
-		sb.append("Academic Scale: ").append(university.getScaleAcademics()).append("\n");
-		sb.append("Social Scale: ").append(university.getScaleSocial()).append("\n");
-		sb.append("Quality of Life Scale: ").append(university.getScaleQualityOfLife()).append("\n");
-		
-		return sb.toString();
-	}
+
 
 }

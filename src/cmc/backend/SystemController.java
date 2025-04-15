@@ -153,6 +153,7 @@ public class SystemController {
 			else {
 				sb.append(String.join(", ", school.getEmphases())).append("\n");
 			}
+			
 			return sb.toString(); //proper return
 			}
 		}
