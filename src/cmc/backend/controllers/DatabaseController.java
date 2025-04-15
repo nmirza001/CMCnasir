@@ -85,7 +85,7 @@ public class DatabaseController implements AutoCloseable {
 			return true;
 		}
 	}
-
+	
 	
 	// get a user; null if not in DB
 	public User getUser(String username) {

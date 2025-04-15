@@ -1,5 +1,6 @@
 package cmc.frontend;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import cmc.backend.AccountController;
@@ -81,7 +82,7 @@ public class AdminInteraction extends UserInteraction{
  		}
   
  		// List starts at 1 so zero is not a valid option
- 		if(usernum <= 0 || usernum >= allUsers.size()) {
+ 		if(usernum <= 0 || usernum > allUsers.size()) {
  			return false;
  		}
  		
@@ -90,6 +91,76 @@ public class AdminInteraction extends UserInteraction{
  		
  		return this.theSystemController.removeUser(u);
  	}
+ 	
+ 	//ask the admin for a username and then deactivates that user
+ 	public boolean deactivateUser(Scanner s) {
+ 		
+ 		List<User> allUsers = getAllUsers();
+
+ 		int len = allUsers.size();
+ 		// List starts at 1
+ 		for(int i = 0; i < len; i++) {
+ 			String msg = String.format("%d. %s", i + 1, allUsers.get(i).getUsername());
+ 			System.out.println(msg);
+ 		}
+  
+ 		System.out.print("Username number:");
+  
+ 		int usernum;
+ 		try {
+ 			usernum = s.nextInt();
+ 		}
+ 		catch(java.util.InputMismatchException e) {
+ 			return false;
+ 		}
+ 		finally {
+ 			s.nextLine();
+ 		}
+  
+ 		// List starts at 1 so zero is not a valid option
+ 		if(usernum <= 0 || usernum > allUsers.size()) {
+ 			return false;
+ 		}
+ 		
+ 		// Shift everything by 1 since list starts at 1
+ 		User u = allUsers.get(usernum - 1);
+ 		
+ 		return this.theSystemController.deactivateUser(u);
+ 	}
+ 	
+ 	/**
+ 	 * Search for user and return their number in list and there username name and last name
+ 	 * @param s scans for username to search for
+ 	 * @return returns true if username was found and false if not found
+ 	 * @author tflynn001
+ 	 * Version April 14, 2025
+ 	 */
+ 	
+ 	public boolean searchUsers(Scanner s) {
+        List<User> uList = getAllUsers();
+        
+        System.out.print("Username name to search for:");
+        
+ 		String searchName = s.nextLine();
+
+        int nameSpot = 0;
+        
+        for (int i = 0; i < uList.size(); i++) {
+            User us = uList.get(i);
+            
+            boolean ignoreState = searchName.equals("");
+            if(!ignoreState && !us.getUsername().equals(searchName)) continue;
+            
+            nameSpot = i + 1;
+            System.out.println("The user you are looking for has the number " + nameSpot);
+            System.out.println(us.getUsername() + " | " + us.getFirstName() + " | " + us.getLastName());
+            break;
+        }
+        if(nameSpot > 0)
+        	return true;
+        else
+        	return false;
+    }
  	
  	
  	//(2) - Admin Viewer Methods

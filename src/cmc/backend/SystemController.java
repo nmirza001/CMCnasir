@@ -12,6 +12,7 @@ public class SystemController {
 	private DatabaseController myDBController;
 	private AccountController myAC;
 	private UniversityController myUC;
+	private SearchController mySearchController; // Added field declaration
 	
 	// Construct a SystemController using the basic (no parameter)
 	// DatabaseController as the underlying database access.
@@ -19,6 +20,7 @@ public class SystemController {
 		this.myDBController = new DatabaseController();
 		this.myAC = new AccountController();
 		this.myUC = new UniversityController();
+		this.mySearchController = new SearchController(myUC);
 	}
 	
 	/**
@@ -70,32 +72,27 @@ public class SystemController {
 		}
 	}
 	
-	// this REGULAR USER ONLY method searches for schools in the database
-	// based on provided criteria (just state for now)
 	/**
-	 * Searches for schools with certain criteria.
-	 * @param state Exact state or empty string to ignore
-	 * @param stuNum Exact student number or -1 to ignore
-	 * @return A list of universities that match the given
-	 * 		   criteria.
+	 * Admin only method to deactivate a user
+	 * @param User u gets the user to deactivate
+	 * @return returns true if deactivated and false if not deactivated
+	 * @author tflynn001
+	 * Version April 14, 2025
 	 */
-	public List<University> search(String state, int stuNum) {
-		List<University> schoolList = myUC.getAllSchools();
-		List<University> filteredList = new ArrayList<>();
-		
-		for (int i = 0; i < schoolList.size(); i++) {
-			University uni = schoolList.get(i);
-			
-			boolean ignoreState = state.equals("");
-			if(!ignoreState && !uni.getState().equals(state)) continue;
-			
-			boolean ignoreStuNum = stuNum < 0;
-			if(!ignoreStuNum && uni.getNumStudents() != stuNum) continue;
-			
-			filteredList.add(uni);
+	public boolean deactivateUser(User u) {
+		try {
+			return this.myAC.deactivateUser(u);
+		} catch (CMCException e) {
+			return false;
 		}
-		
-		return filteredList;
+	}
+	
+	/**
+	 * Gets the SearchController for performing university searches.
+	 * @return The search controller
+	 */
+	public SearchController getSearchController() {
+		return mySearchController;
 	}
 	
 	// this REGULAR USER ONLY method attempts to add the provided school
@@ -200,5 +197,4 @@ public class SystemController {
  
 		return myUC.removeUniversity(u);
 	}
-
 }

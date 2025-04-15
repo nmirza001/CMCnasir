@@ -36,10 +36,17 @@ public class AccountController {
 		return db.addUser(u);
 	}
 
-	// remove a user from the db
+	// deactivates a user
 	public boolean removeUser(User u) throws CMCException {
 		
 		return db.removeUser(u);
+	}
+	
+	// remove a user from the db
+	public boolean deactivateUser(User u) throws CMCException {
+		u.setActivated(false);
+			
+		return db.editUser(u);
 	}
 	
 	// get the list of all the users in the DB

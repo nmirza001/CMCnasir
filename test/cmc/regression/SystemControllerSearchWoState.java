@@ -15,8 +15,7 @@ public class SystemControllerSearchWoState {
 	@Test
 	public void test() {
 		SystemController sc = new SystemController();
-		List<University> results = sc.search("", -1);
+		List<University> results = sc.getSearchController().search("", -1);
 		Assert.assertTrue(results.size() > 0);
 	}
-
 }
