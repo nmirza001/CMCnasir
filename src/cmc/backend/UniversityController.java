@@ -25,7 +25,15 @@ public class UniversityController {
 	private DatabaseController db;
 	
 	public UniversityController() {
-		this.db = new DatabaseController();
+		this(new DatabaseController());
+	}
+	
+	/**
+	 * The injected database controller.
+	 * @param injectedDb The new database controller.
+	 */
+	public UniversityController(DatabaseController injectedDb) {
+		this.db = injectedDb;
 	}
 	
 	/**

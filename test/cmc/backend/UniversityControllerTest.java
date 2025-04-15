@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
+import cmc.backend.controllers.MockDatabaseController;
 import cmc.backend.entities.University;
 
 /**
@@ -35,7 +36,7 @@ public class UniversityControllerTest {
 		// No 2 will only be added and removed in test methods
 		name2 = "TEST SCHOOL NO 2 " + rand.nextInt();
 		
-		uc = new UniversityController();
+		uc = new UniversityController(new MockDatabaseController());
 		University uni = new University(name1);
 		boolean succ = uc.addNewUniversity(uni);
 		Assert.assertTrue(succ);
