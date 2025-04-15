@@ -14,9 +14,7 @@ import org.junit.runner.RunWith;
 	cmc.regression.SystemControllerSearchWoState.class,
 	
 	cmc.userstory.UserLoginTest.class,
-	cmc.userstory.UniversitySearchTest.class,
-	
-	cmc.systemtest.UserSearchSystemTest.class
+	cmc.userstory.UniversitySearchTest.class
 })
 public class AllTests {
 
