@@ -87,7 +87,7 @@ public class AdminInteraction extends UserInteraction{
  		}
   
  		// List starts at 1 so zero is not a valid option
- 		if(usernum <= 0 || usernum >= allUsers.size()) {
+ 		if(usernum <= 0 || usernum > allUsers.size()) {
  			return false;
  		}
  		
@@ -95,6 +95,42 @@ public class AdminInteraction extends UserInteraction{
  		User u = allUsers.get(usernum - 1);
  		
  		return this.theSystemController.removeUser(u);
+ 	}
+ 	
+ 	//ask the admin for a username and then deactivates that user
+ 	public boolean deactivateUser(Scanner s) {
+ 		
+ 		List<User> allUsers = getAllUsers();
+
+ 		int len = allUsers.size();
+ 		// List starts at 1
+ 		for(int i = 0; i < len; i++) {
+ 			String msg = String.format("%d. %s", i + 1, allUsers.get(i).getUsername());
+ 			System.out.println(msg);
+ 		}
+  
+ 		System.out.print("Username number:");
+  
+ 		int usernum;
+ 		try {
+ 			usernum = s.nextInt();
+ 		}
+ 		catch(java.util.InputMismatchException e) {
+ 			return false;
+ 		}
+ 		finally {
+ 			s.nextLine();
+ 		}
+  
+ 		// List starts at 1 so zero is not a valid option
+ 		if(usernum <= 0 || usernum > allUsers.size()) {
+ 			return false;
+ 		}
+ 		
+ 		// Shift everything by 1 since list starts at 1
+ 		User u = allUsers.get(usernum - 1);
+ 		
+ 		return this.theSystemController.deactivateUser(u);
  	}
  	
  	
