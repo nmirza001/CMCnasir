@@ -1,10 +1,7 @@
 package cmc.backend;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import cmc.backend.entities.University;
-
 /**
  * Controller for handling search operations related to universities.
  * @author Nasir Mirza
@@ -33,8 +30,9 @@ public class SearchController {
     
     /**
      * Searches for universities based on provided criteria.
+     * Search is case-insensitive for string criteria.
      * 
-     * @param state Exact state or empty string to ignore
+     * @param state State name (case-insensitive) or empty string to ignore
      * @param stuNum Exact student number or -1 to ignore
      * @return A list of universities that match the given criteria
      */
@@ -42,11 +40,14 @@ public class SearchController {
         List<University> schoolList = universityController.getAllSchools();
         List<University> filteredList = new ArrayList<University>();
         
+        // Convert search state to uppercase for case-insensitive comparison
+        String searchState = state.toUpperCase();
+        
         for (int i = 0; i < schoolList.size(); i++) {
             University uni = schoolList.get(i);
             
-            boolean ignoreState = state.equals("");
-            if(!ignoreState && !uni.getState().equals(state)) continue;
+            boolean ignoreState = searchState.equals("");
+            if(!ignoreState && !uni.getState().equals(searchState)) continue;
             
             boolean ignoreStuNum = stuNum < 0;
             if(!ignoreStuNum && uni.getNumStudents() != stuNum) continue;
