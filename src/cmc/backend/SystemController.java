@@ -72,21 +72,6 @@ public class SystemController {
 		}
 	}
 	
-	// this REGULAR USER ONLY method searches for schools in the database
-	// based on provided criteria (just state for now)
-	/**
-	 * Searches for schools with certain criteria.
-	 * @param state Exact state or empty string to ignore
-	 * @param stuNum Exact student number or -1 to ignore
-	 * @return A list of universities that match the given
-	 * 		   criteria.
-	 * @deprecated Use getSearchController().search(state, stuNum) instead
-	 */
-	public List<University> search(String state, int stuNum) {
-		// Delegate to the SearchController
-		return mySearchController.search(state, stuNum);
-	}
-	
 	/**
 	 * Gets the SearchController for performing university searches.
 	 * @return The search controller
