@@ -12,6 +12,7 @@ public class SystemController {
 	private DatabaseController myDBController;
 	private AccountController myAC;
 	private UniversityController myUC;
+	private SearchController mySearchController; // Added field declaration
 	
 	// Construct a SystemController using the basic (no parameter)
 	// DatabaseController as the underlying database access.
@@ -19,6 +20,7 @@ public class SystemController {
 		this.myDBController = new DatabaseController();
 		this.myAC = new AccountController();
 		this.myUC = new UniversityController();
+		this.mySearchController = new SearchController(myUC);
 	}
 	
 	/**
@@ -78,24 +80,19 @@ public class SystemController {
 	 * @param stuNum Exact student number or -1 to ignore
 	 * @return A list of universities that match the given
 	 * 		   criteria.
+	 * @deprecated Use getSearchController().search(state, stuNum) instead
 	 */
 	public List<University> search(String state, int stuNum) {
-		List<University> schoolList = myUC.getAllSchools();
-		List<University> filteredList = new ArrayList<>();
-		
-		for (int i = 0; i < schoolList.size(); i++) {
-			University uni = schoolList.get(i);
-			
-			boolean ignoreState = state.equals("");
-			if(!ignoreState && !uni.getState().equals(state)) continue;
-			
-			boolean ignoreStuNum = stuNum < 0;
-			if(!ignoreStuNum && uni.getNumStudents() != stuNum) continue;
-			
-			filteredList.add(uni);
-		}
-		
-		return filteredList;
+		// Delegate to the SearchController
+		return mySearchController.search(state, stuNum);
+	}
+	
+	/**
+	 * Gets the SearchController for performing university searches.
+	 * @return The search controller
+	 */
+	public SearchController getSearchController() {
+		return mySearchController;
 	}
 	
 	// this REGULAR USER ONLY method attempts to add the provided school
@@ -199,5 +196,4 @@ public class SystemController {
  
 		return myUC.removeUniversity(u);
 	}
-
 }

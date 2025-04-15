@@ -62,8 +62,12 @@ public class UserInteraction {
 		}
 	}
 	
-	
-	
+	/**
+	 * Searches for universities based on user input criteria.
+	 * 
+	 * @param s Scanner for reading user input
+	 * @return List of universities matching the search criteria
+	 */
 	public List<University> search(Scanner s) {
 		// TODO: in the future, we would like to support searching by various
 		//       criteria, but we'll settle for just state for now
@@ -82,7 +86,8 @@ public class UserInteraction {
 			return new ArrayList<University>();
 		}
 		
-		return this.theSystemController.search(state, dNumStu);
+		// Use the SearchController via SystemController
+		return this.theSystemController.getSearchController().search(state, dNumStu);
 	}
 	
 	// ask for a school name to save, and attempt to save that school
