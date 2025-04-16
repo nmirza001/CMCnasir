@@ -29,12 +29,25 @@ public class DatabaseController implements AutoCloseable {
 	private UniversityDBLibrary database;
 	private DBExtension dbext;
 
-	// The default constructor that connects to the underlying
-	// UniversityDBLibrary object using your team's info.
+	/**
+	 * Creates a database controller and connects to the database.
+	 */
 	public DatabaseController() {
-		database = new UniversityDBLibrary("dei", "Csci230$");
-		dbext = new DBExtension("dei", "Csci230$");
-		dbext.connect();
+		this(true);
+	}
+	
+	/**
+	 * Creates a database controller and choose to connect to the database.
+	 * SHOULD ONLY BE USED FOR OVERRIDES.
+	 * @param shouldConnect {@code true} to connect to database,
+	 *        otherwise database will not be connected.
+	 */
+	public DatabaseController(boolean shouldConnect) {
+		if(shouldConnect) {
+			database = new UniversityDBLibrary("dei", "Csci230$");
+			dbext = new DBExtension("dei", "Csci230$");
+			dbext.connect();
+		}
 	}
 	
 	/**

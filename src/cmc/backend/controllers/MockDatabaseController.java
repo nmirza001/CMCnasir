@@ -24,6 +24,7 @@ public class MockDatabaseController extends DatabaseController {
 	private Map<String, List<String>> savedSchools;
 	
 	public MockDatabaseController() {
+		super(false);
 		users = new HashMap<>();
 		savedSchools = new HashMap<>();
 		
