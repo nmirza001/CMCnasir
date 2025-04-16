@@ -79,7 +79,7 @@ The `findSimilar()` method returns universities that match at least **3 out of 7
 Clone into your Eclipse workspace or preferred IDE.
 
 ### 🛠 Requirements
-- Java JDK 1.8 or higher
+- Java JDK 1.8
 - Eclipse or IntelliJ (or CLI)
 - JUnit 4
 - UniversityDBLibrary.jar (if connecting to real DB)
