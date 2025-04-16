@@ -50,17 +50,59 @@ public class Driver {
             return;
         }
 
-		for (int i = 0; i < results.size(); i++) {
+        // Find maximum lengths for formatting
+        int maxNameLength = "Name".length();
+        int maxStateLength = "State".length();
+        int maxLocationLength = "Location".length();
+        int maxControlLength = "Control".length();
+        
+        for (University school : results) {
+            maxNameLength = Math.max(maxNameLength, school.getName().length());
+            maxStateLength = Math.max(maxStateLength, 
+                (school.getState() != null && !school.getState().equals("-1")) ? 
+                school.getState().length() : "N/A".length());
+            maxLocationLength = Math.max(maxLocationLength, 
+                (school.getLocation() != null && !school.getLocation().equals("-1")) ? 
+                school.getLocation().length() : "N/A".length());
+            maxControlLength = Math.max(maxControlLength, 
+                (school.getControl() != null && !school.getControl().equals("-1")) ? 
+                school.getControl().length() : "N/A".length());
+        }
+        
+        // Add some padding
+        maxNameLength += 2;
+        maxStateLength += 2;
+        maxLocationLength += 2;
+        maxControlLength += 2;
+        
+        // Create format string
+        String format = "%-3s | %-" + maxNameLength + "s | %-" + maxStateLength + 
+                       "s | %-" + maxLocationLength + "s | %-" + maxControlLength + "s\n";
+        
+        // Print header
+        System.out.printf(format, "#", "Name", "State", "Location", "Control");
+        
+        // Print separator line
+        int totalLength = 4 + maxNameLength + 3 + maxStateLength + 3 + 
+                         maxLocationLength + 3 + maxControlLength;
+        for (int i = 0; i < totalLength; i++) {
+            System.out.print("-");
+        }
+        System.out.println();
+        
+        // Print data rows
+        for (int i = 0; i < results.size(); i++) {
             University school = results.get(i);
-            // Display basic info in results
-            System.out.printf("%d. %s (%s, %s)\n",
-                i + 1,
-                school.getName(),
-                school.getState() != null ? school.getState() : "N/A", // Handle potential nulls
-                school.getLocation() != null && !school.getLocation().equals("-1") ? school.getLocation() : "N/A"
-            );
-		}
-		System.out.println();
+            String state = (school.getState() != null && !school.getState().equals("-1")) ? 
+                         school.getState() : "N/A";
+            String location = (school.getLocation() != null && !school.getLocation().equals("-1")) ? 
+                            school.getLocation() : "N/A";
+            String control = (school.getControl() != null && !school.getControl().equals("-1")) ? 
+                           school.getControl() : "N/A";
+            
+            System.out.printf(format, (i + 1), school.getName(), state, location, control);
+        }
+        System.out.println();
 
 		int choice = ConsoleUtils.getMenuOption(s, Arrays.asList("View Details", "Save School", "Go Back"));
 
@@ -103,9 +145,29 @@ public class Driver {
         if (schools == null || schools.isEmpty()) {
             System.out.println("You have no saved schools.");
         } else {
-            System.out.println("Your saved schools:");
+            // Find the maximum length of school names for formatting
+            int maxNameLength = "School Name".length();
+            for (String school : schools) {
+                maxNameLength = Math.max(maxNameLength, school.length());
+            }
+            
+            // Add padding and create format string
+            maxNameLength += 2;
+            String format = "%-3s | %-" + maxNameLength + "s\n";
+            
+            // Print header
+            System.out.printf(format, "#", "School Name");
+            
+            // Print separator
+            int totalLength = 4 + maxNameLength;
+            for (int i = 0; i < totalLength; i++) {
+                System.out.print("-");
+            }
+            System.out.println();
+            
+            // Print data rows
             for (int i = 0; i < schools.size(); i++) {
-                System.out.printf("%d. %s\n", i + 1, schools.get(i));
+                System.out.printf(format, (i + 1), schools.get(i));
             }
             System.out.println();
         }
@@ -218,23 +280,65 @@ public class Driver {
             } else {
                 printHeader("Similar Schools Found:");
                 int displayLimit = Math.min(similarSchools.size(), 10);
+                
+                // Find maximum lengths for formatting
+                int maxNameLength = "Name".length();
+                int maxStateLength = "State".length();
+                int maxLocationLength = "Location".length();
+                int maxStudentsLength = "Students".length();
+                int maxAcceptanceLength = "Acceptance".length();
+                
                 for (int i = 0; i < displayLimit; i++) {
                     University simUni = similarSchools.get(i);
                     String numStudentsStr = simUni.getNumStudents() > 0 ? String.valueOf(simUni.getNumStudents()) : "N/A";
                     String acceptanceRateStr = simUni.getPercentAdmitted() >= 0 ? String.format("%.1f%%", simUni.getPercentAdmitted()) : "N/A";
                     String locationStr = (simUni.getLocation() != null && !simUni.getLocation().equals("-1")) ? simUni.getLocation() : "N/A";
-
-                    System.out.printf("%d. %s (%s, %s) - Students: %s, Acceptance: %s\n",
-                            i + 1,
-                            simUni.getName(),
-                            simUni.getState() != null ? simUni.getState() : "N/A",
-                            locationStr,
-                            numStudentsStr,
-                            acceptanceRateStr);
+                    
+                    maxNameLength = Math.max(maxNameLength, simUni.getName().length());
+                    maxStateLength = Math.max(maxStateLength, 
+                        (simUni.getState() != null) ? simUni.getState().length() : "N/A".length());
+                    maxLocationLength = Math.max(maxLocationLength, locationStr.length());
+                    maxStudentsLength = Math.max(maxStudentsLength, numStudentsStr.length());
+                    maxAcceptanceLength = Math.max(maxAcceptanceLength, acceptanceRateStr.length());
                 }
-                 if (similarSchools.size() > displayLimit) {
-                     System.out.println("... and " + (similarSchools.size() - displayLimit) + " more.");
-                 }
+                
+                // Add padding
+                maxNameLength += 2;
+                maxStateLength += 2;
+                maxLocationLength += 2;
+                maxStudentsLength += 2;
+                maxAcceptanceLength += 2;
+                
+                // Create format string
+                String format = "%-3s | %-" + maxNameLength + "s | %-" + maxStateLength + 
+                               "s | %-" + maxLocationLength + "s | %-" + maxStudentsLength + 
+                               "s | %-" + maxAcceptanceLength + "s\n";
+                
+                // Print header
+                System.out.printf(format, "#", "Name", "State", "Location", "Students", "Acceptance");
+                
+                // Print separator
+                int totalLength = 4 + maxNameLength + 3 + maxStateLength + 3 + maxLocationLength + 
+                                 3 + maxStudentsLength + 3 + maxAcceptanceLength;
+                for (int i = 0; i < totalLength; i++) {
+                    System.out.print("-");
+                }
+                System.out.println();
+                
+                // Print data rows
+                for (int i = 0; i < displayLimit; i++) {
+                    University simUni = similarSchools.get(i);
+                    String numStudentsStr = simUni.getNumStudents() > 0 ? String.valueOf(simUni.getNumStudents()) : "N/A";
+                    String acceptanceRateStr = simUni.getPercentAdmitted() >= 0 ? String.format("%.1f%%", simUni.getPercentAdmitted()) : "N/A";
+                    String locationStr = (simUni.getLocation() != null && !simUni.getLocation().equals("-1")) ? simUni.getLocation() : "N/A";
+                    String stateStr = (simUni.getState() != null) ? simUni.getState() : "N/A";
+                    
+                    System.out.printf(format, (i + 1), simUni.getName(), stateStr, locationStr, numStudentsStr, acceptanceRateStr);
+                }
+                
+                if (similarSchools.size() > displayLimit) {
+                    System.out.println("... and " + (similarSchools.size() - displayLimit) + " more.");
+                }
                 System.out.println();
             }
         }
@@ -371,9 +475,11 @@ public class Driver {
         // Providing a basic structure:
         printHeader("Admin User Management (Placeholder)");
 
-        // Ideally, call a method like baseUi.getAllUserDetailsForAdmin()
-        // List<User> allUsers = baseUi.someAdminGetAllUsersMethod();
-        // if (allUsers...) display them with status
+        // Since UserInteraction doesn't have getAllUsers(), we'll skip showing users
+        // and just display the menu options
+        System.out.println("User management features are limited in this version.");
+        System.out.println("A complete implementation would display all users here in a tabular format.");
+        System.out.println();
 
         System.out.println("1. Add User (Not Implemented)");
         System.out.println("2. Edit User (Not Implemented)");
@@ -443,9 +549,32 @@ public class Driver {
                     System.out.println("No universities found in the system.");
                 } else {
                     printHeader("All Universities");
-                    for (int i = 0; i < allUnis.size(); i++) {
-                        System.out.printf("%d. %s\n", i + 1, allUnis.get(i).getName());
+                    
+                    // Find maximum name length for formatting
+                    int maxNameLength = "University Name".length();
+                    for (University uni : allUnis) {
+                        maxNameLength = Math.max(maxNameLength, uni.getName().length());
                     }
+                    
+                    // Add padding and create format string
+                    maxNameLength += 2;
+                    String format = "%-3s | %-" + maxNameLength + "s\n";
+                    
+                    // Print header
+                    System.out.printf(format, "#", "University Name");
+                    
+                    // Print separator
+                    int totalLength = 4 + maxNameLength;
+                    for (int i = 0; i < totalLength; i++) {
+                        System.out.print("-");
+                    }
+                    System.out.println();
+                    
+                    // Print data rows
+                    for (int i = 0; i < allUnis.size(); i++) {
+                        System.out.printf(format, (i + 1), allUnis.get(i).getName());
+                    }
+                    System.out.println();
                 }
                 break;
             case 2:
