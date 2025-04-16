@@ -76,7 +76,7 @@ public class AdminUniversityDetailsWorksTest {
 		    String input = "2\n" //University Menu
 						+ "4\n" //Edit University
 						+ "1\n" //Selecting the first only uni
-						+ "\nURBAN" //Name (don't change)
+						+ "URBAN\n" //Name (don't change)
 						+ "\n" //New State
 						+ "\n\n\n\n\n\n\n\n\n\n\n\n\n" //all other fields ignored
 						+ "5\n"; //Go Back
