@@ -21,10 +21,13 @@ public class DeactivatedUserCanStillLogin {
 	private static final User usr = new User(USERNAME, PASSWD, false, "Test", "Acct");
 	
 	private AccountController ac;
+	private SystemController sc;
 	
 	@Before
 	public void setUp() throws CMCException {
-		ac = new AccountController(new MockDatabaseController());
+		DatabaseController db = new MockDatabaseController();
+		ac = new AccountController(db);
+		sc = new SystemController(db);
 		usr.setActivated(false);
 		ac.addUser(usr);
 	}
@@ -35,8 +38,7 @@ public class DeactivatedUserCanStillLogin {
 	}
 	
 	@Test
-	public void test() throws CMCException {
-		SystemController sc = new SystemController();
+	public void testDeactiatedUserLogin() throws CMCException {
 		User user = sc.login(USERNAME, PASSWD);
 		Assert.assertNull(user);
 	}
