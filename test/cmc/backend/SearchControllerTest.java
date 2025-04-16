@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cmc.backend.entities.University;
+import cmc.backend.controllers.*;
 
 /**
  * Tests for the SearchController class which handles university search operations.
@@ -26,12 +27,15 @@ import cmc.backend.entities.University;
  */
 public class SearchControllerTest {
     
+	private UniversityController uc;
     private SearchController searchController;
     
     @Before
     public void setUp() {
         // Create a new SearchController for each test
-        searchController = new SearchController();
+    	DatabaseController mock = new MockDatabaseController();
+    	uc = new UniversityController(mock);
+        searchController = new SearchController(uc);
     }
     
     @After
@@ -100,8 +104,7 @@ public class SearchControllerTest {
         List<University> results = searchController.search("", -1);
         
         // Get the full list directly for comparison
-        UniversityController uniController = new UniversityController();
-        List<University> allUniversities = uniController.getAllSchools();
+        List<University> allUniversities = uc.getAllSchools();
         
         // Both lists should have the same size
         Assert.assertEquals("Empty search should return all universities",
