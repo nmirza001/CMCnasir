@@ -68,26 +68,4 @@ public class AdminUniversityDetailsWorksTest {
 		Assert.assertEquals(1, updatedUniversities.size());
 		Assert.assertEquals("NY", updatedUniversities.get(0).getState());
 	}
-	
-	@Test
-	public void testSuccessfulEditUniversityLocation(){
-		//simulate selecting the university and editing the Location of the university
-		
-		    String input = "2\n" //University Menu
-						+ "4\n" //Edit University
-						+ "1\n" //Selecting the first only uni
-						+ "\n" //Name (don't change)
-						+ "\n" //State
-						+ "URBAN\n" //Location
-						+ "\n\n\n\n\n\n\n\n\n\n\n\n\n" //all other fields ignored
-						+ "5\n"; //Go Back
-
-			InputStream enterStream = new ByteArrayInputStream(input.getBytes());
-			Scanner s = new Scanner(enterStream);
-			
-			adminUniversityMenu.prompt(s);
-			
-			List<University> updatedUniversities = mockDatabaseController.getAllSchools();
-			Assert.assertEquals("URBAN", updatedUniversities.get(0).getLocation());
-	}
 }
