@@ -87,6 +87,7 @@ public class AdminUniversityDetailsWorksTest {
 			adminUniversityMenu.prompt(s);
 			
 			List<University> updatedUniversities = mockDatabaseController.getAllSchools();
+			Assert.assertEquals(1, updatedUniversities.size());
 			Assert.assertEquals("URBAN", updatedUniversities.get(0).getLocation());
 	}
 }
