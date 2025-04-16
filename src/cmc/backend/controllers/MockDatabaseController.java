@@ -63,7 +63,7 @@ public class MockDatabaseController extends DatabaseController {
 	
 	public boolean saveSchool(String username, String schoolName) throws CMCException {
 		
-		savedSchools.putIfAbsent(schoolName, new ArrayList<String>());
+		savedSchools.putIfAbsent(username, new ArrayList<String>());
 		
 		List<String> list = savedSchools.get(username);
 		return list.add(schoolName);
