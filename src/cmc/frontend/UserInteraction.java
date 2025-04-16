@@ -9,6 +9,7 @@ import cmc.CMCException;
 import cmc.backend.AccountController;
 import cmc.backend.SystemController;
 import cmc.backend.User;
+import cmc.backend.controllers.DatabaseController;
 import cmc.backend.entities.University;
 
 public class UserInteraction {
@@ -25,7 +26,11 @@ public class UserInteraction {
 	public UserInteraction() {
 		this.theSystemController = new SystemController();
 		acct = new AccountController();
-		this.loggedInUser = null;
+	}
+	
+	public UserInteraction(DatabaseController injectDb) {
+		theSystemController = new SystemController(injectDb);
+		acct = new AccountController(injectDb);
 	}
 
 	// attempt to login, print message, and return success or failure

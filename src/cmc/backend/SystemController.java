@@ -23,6 +23,13 @@ public class SystemController {
 		this.mySearchController = new SearchController(myUC);
 	}
 	
+	public SystemController(DatabaseController injectDb) {
+		myDBController = injectDb;
+		myAC = new AccountController(injectDb);
+		myUC = new UniversityController(injectDb);
+		mySearchController = new SearchController(myUC);
+	}
+	
 	/**
 	 * Verify whether the username and password provided match a user in the
 	 * database.  Return a Boolean indicating yes or no.

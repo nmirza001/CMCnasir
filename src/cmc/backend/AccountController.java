@@ -27,6 +27,10 @@ public class AccountController {
 		this.db = new DatabaseController();
 	}
 	
+	public AccountController(DatabaseController injectDb) {
+		db = injectDb;
+	}
+	
 	// add a user to the db
 	// TODO: it would be nice if this could take a User object instead
 	// (so "higher-abstraction" classes don't have to worry about the order
