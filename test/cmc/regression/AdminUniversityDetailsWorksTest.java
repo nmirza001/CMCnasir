@@ -68,4 +68,24 @@ public class AdminUniversityDetailsWorksTest {
 		Assert.assertEquals(1, updatedUniversities.size());
 		Assert.assertEquals("NY", updatedUniversities.get(0).getState());
 	}
+	
+	@Test
+	public void testAbortEdit(){
+		
+		University universities = mockDatabaseController.getAllSchools().get(0); //untampered list
+		
+		String input = "2\n"
+				+ "4\n"
+				+ "1\n"
+				+"EXIT\n"
+				+"5\n";
+		
+		InputStream enterStream = new ByteArrayInputStream(input.getBytes()); //reads input in bytes or one by one
+		Scanner s = new Scanner(enterStream);
+		
+		adminUniversityMenu.prompt(s);
+		
+		List<University> updatedUniversities = mockDatabaseController.getAllSchools();
+		Assert.assertEquals(universities.getState(), updatedUniversities.get(0).getState());
+	}
 }
