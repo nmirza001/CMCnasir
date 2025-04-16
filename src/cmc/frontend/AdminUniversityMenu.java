@@ -15,10 +15,10 @@ import cmc.backend.entities.University;
  */
 public class AdminUniversityMenu {
 	
-	private final AdminInteraction ui;
+	private final AdminInteraction ai; //adminInteraction / ai
 	
-	public AdminUniversityMenu(AdminInteraction ui) {
-		this.ui = ui;
+	public AdminUniversityMenu(AdminInteraction ai) {
+		this.ai = ai;
 	}
 	
 	public void prompt(Scanner s) {
@@ -42,7 +42,7 @@ public class AdminUniversityMenu {
 			addSchoolPrompt(s);
 			break;
 		case 3:
-			List <University> universitiesList = ui.getAllUniversities(); //get all universities into a list
+			List <University> universitiesList = ai.getAllUniversities(); //get all universities into a list
 			
 			//account for an empty list case
 			if (universitiesList.isEmpty()) {
@@ -85,7 +85,7 @@ public class AdminUniversityMenu {
 	 * @return Count of universities.
 	 */
 	private int printSchools() {
-		List<University> us = ui.getAllUniversities();
+		List<University> us = ai.getAllUniversities();
 		for(int i = 0; i < us.size(); i++) {
 			System.out.print(i + 1);
 			System.out.print(") ");
@@ -102,8 +102,8 @@ public class AdminUniversityMenu {
 			return;
 		}
 		
-		University u = ui.getAllUniversities().get(choice - 1);
-		if(ui.removeUniversity(u)) System.out.println("Removed.");
+		University u = ai.getAllUniversities().get(choice - 1);
+		if(ai.removeUniversity(u)) System.out.println("Removed.");
 	}
 	
 	private void addSchoolPrompt(Scanner s) {
@@ -112,7 +112,7 @@ public class AdminUniversityMenu {
 			System.out.println("\nAdd University canceled.");
 		}
 		else {
-			boolean succ = ui.addNewUniversity(uni);
+			boolean succ = ai.addNewUniversity(uni);
 			if(succ) System.out.println("Successfully added university to system.");
 			else System.out.println("Failed to insert to database.");
 		}
@@ -126,7 +126,7 @@ public class AdminUniversityMenu {
 			System.out.println("\nEdit University canceled.");
 		}
 		else {
-			boolean succ = ui.editUniversityDetails(s, u);
+			boolean succ = ai.editUniversityDetails(s, u);
 			if(succ) System.out.println("Successfully edited the university.");
 			else System.out.println("Failed to edit school database.");
 		}

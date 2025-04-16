@@ -65,6 +65,7 @@ public class UniversityController {
 		return db.removeUniversity(u);
 	}
 	
+	
 	/**
 	 * Edits a university. The university must already be in
 	 * the database.
@@ -72,11 +73,11 @@ public class UniversityController {
 	 * @return {@code true} if successful.
 	 * @see #addNewUniversity(University)
 	 * @see #removeUniversity(University)
-	 * @author Roman Lefler
-	 * @version Mar 16, 2025
+	 * @author Roman Lefler + Rick Masaana
+	 * @version 4/15/2025
 	 */
-	public boolean editUniversity(University u) {
-		
+	public boolean editUniversity(University u){
+		if (u == null) throw new IllegalArgumentException("University is null");
 		return db.editUniversity(u);
 	}
 	

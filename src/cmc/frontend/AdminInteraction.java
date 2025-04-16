@@ -16,7 +16,10 @@ public class AdminInteraction extends UserInteraction{
 	
 	
 	public AdminInteraction(SystemController theSystemController, AccountController acct, UniversityController theUniversityController){
+		super(); //calls the super class which is UserInteraction / ui
 		this.theUniversityController = theUniversityController;
+		this.theSystemController = theSystemController;
+		this.acct = acct;
 	}
 	
 	//(0) - display methods

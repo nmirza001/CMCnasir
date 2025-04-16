@@ -204,4 +204,17 @@ public class SystemController {
  
 		return myUC.removeUniversity(u);
 	}
+	
+	/**
+	 * 
+	 * @param University uni takes given entry
+	 * @return {@code true} on success
+	 * @throws IllegalArgumentException is null
+	 * @author Rick Masaana
+	 * @version 4/15/2025
+	 */
+	public boolean editUniversity (University uni){
+		if (uni == null) throw new IllegalArgumentException ("University is null");
+			return myUC.editUniversity(uni);
+	}
 }

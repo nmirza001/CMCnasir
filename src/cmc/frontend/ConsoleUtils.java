@@ -65,6 +65,7 @@ public class ConsoleUtils {
 	 * @param Scanner s gets the input that is being read
 	 * @return integer entered by the user, or -1 if non-integer input given.
 	 * @author Rick Masaana
+	 * @version 4/15/2025
 	 */
 	public static int tryGetInt(Scanner s){
 		try {
