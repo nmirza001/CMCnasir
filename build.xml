@@ -144,8 +144,8 @@
     </target>
     <target name="AllTests">
         <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
+        <junit fork="yes" printsummary="withOutAndErr" haltOnFailure="yes" haltOnError="yes">
+            <formatter type="plain" usefile="false" />
             <test name="cmc.AllTests" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="CMC.classpath"/>
