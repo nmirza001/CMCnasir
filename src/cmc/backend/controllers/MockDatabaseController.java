@@ -215,7 +215,6 @@ public class MockDatabaseController extends DatabaseController {
         }
         if (!unis.containsKey(schoolName)) {
             System.err.println("Mock Warning: Attempt to save non-existent school: " + schoolName);
-            return false;
         }
         savedSchools.putIfAbsent(username, new ArrayList<String>());
         List<String> list = savedSchools.get(username);
