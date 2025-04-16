@@ -142,7 +142,7 @@
             <classpath refid="CMC.classpath"/>
         </java>
     </target>
-    <target name="AllTests (2)">
+    <target name="AllTests">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
