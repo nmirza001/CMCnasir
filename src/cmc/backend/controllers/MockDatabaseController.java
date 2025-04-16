@@ -26,6 +26,8 @@ public class MockDatabaseController extends DatabaseController {
     public MockDatabaseController() {
         super(false);
         users = new HashMap<>();
+        User u = new User("mjordan", "securepwd", false, "Michael", "Jordan");
+		users.put("mjordan", u);
         savedSchools = new HashMap<>();
         unis = new HashMap<>();
 
