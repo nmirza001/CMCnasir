@@ -59,5 +59,29 @@ public class ConsoleUtils {
 		
 		return choice;
 	}
+	/**
+	 * Reads integer from s and handles non-integer inputs
+	 * 
+	 * @param Scanner s gets the input that is being read
+	 * @return integer entered by the user, or -1 if non-integer input given.
+	 * @author Rick Masaana
+	 */
+	public static int tryGetInt(Scanner s){
+		try {
+			return s.nextInt();
+		}
+		catch(java.util.InputMismatchException e){
+			System.out.println("invalid input. Please enter a valid number");
+			s.next();
+			return -1; //failed val
+		}finally {
+			//finally insures that this part is always executed 
+			//regardless of try or catch
+			if (s.hasNextLine()){
+				s.nextLine();
+			}
+		}
+		
+	}
 
 }

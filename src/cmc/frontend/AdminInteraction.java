@@ -1,14 +1,14 @@
 package cmc.frontend;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 import cmc.backend.AccountController;
 import cmc.backend.UniversityController;
-import cmc.backend.User;
 import cmc.backend.entities.University;
-import cmc.CMCException;
 import cmc.backend.SystemController;
+import cmc.CMCException;
+import cmc.backend.User;
 
 public class AdminInteraction extends UserInteraction{
 	@SuppressWarnings("unused")
@@ -172,8 +172,14 @@ public class AdminInteraction extends UserInteraction{
  	
  	//(3) - Admin Editor Methods
  	
-	public boolean editUniversityDetails (University dataBaseUniversity) throws CMCException {
-		return SystemController.editUniversityDetails(dataBaseUniversity);
+	public boolean editUniversityDetails (Scanner s, University editUni) throws CMCException {
+		University editedUniversity = AdminEditSchool.prompt(s, editUni);
+		
+		if (editedUniversity != null){
+			return theSystemController.addNewUniversity(editedUniversity);
+		}
+		
+		return false; //if null
 	}
  	
  	

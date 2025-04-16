@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import cmc.CMCException;
 import cmc.backend.entities.University;
 
 /**
@@ -31,7 +32,7 @@ public class AdminUniversityMenu {
 	private boolean promptCycle(Scanner s) {
 		
 		int choice = ConsoleUtils.getMenuOption(s, Arrays.asList(
-				"View Universities", "Add Universities",
+				"View Universities", "Add Universities", "Edit University",
 				"Remove University", "Go Back"));
 		switch(choice) {
 		case 1:
@@ -41,9 +42,35 @@ public class AdminUniversityMenu {
 			addSchoolPrompt(s);
 			break;
 		case 3:
-			removeSchoolPrompt(s);
+			List <University> universitiesList = ui.getAllUniversities(); //get all universities into a list
+			
+			//account for an empty list case
+			if (universitiesList.isEmpty()) {
+				System.out.println("No universities to edit.");
+				break; 
+			}
+			System.out.println("Select univeristy to edit: ");
+			//prints list for choice
+			for(int i = 0; i < universitiesList.size(); i++) {
+				System.out.println((i + 1) + ". " + universitiesList.get(i).getName());
+			}
+			//enter a valid number to choose university
+			System.out.println("Enter a number to choose the university (or '0' to go back): ");
+			int universityChoice = ConsoleUtils.tryGetInt(s);
+			
+			if (universityChoice > 0 && universityChoice <= universitiesList.size()){
+				University uni = universitiesList.get(universityChoice - 1);
+				try {
+					editUniversityPrompt(s, uni);
+				}catch (CMCException e) {
+					System.err.println("Edit error: " + e.getMessage());
+				}
+			}
 			break;
 		case 4:
+			removeSchoolPrompt(s);
+			break;
+		case 5:
 			// Return false to end loop
 			return false;
 		default:
@@ -91,4 +118,17 @@ public class AdminUniversityMenu {
 		}
 	}
 	
+	private void editUniversityPrompt(Scanner s, University u) throws CMCException {
+		System.out.println("Currently editting: " + u.getName());
+		University uni = AdminEditSchool.prompt(s, u);
+		
+		if(uni == null) {
+			System.out.println("\nEdit University canceled.");
+		}
+		else {
+			boolean succ = ui.editUniversityDetails(s, u);
+			if(succ) System.out.println("Successfully edited the university.");
+			else System.out.println("Failed to edit school database.");
+		}
+	}
 }
