@@ -121,14 +121,6 @@ java -cp "bin:lib/*" org.junit.runner.JUnitCore cmc.AllTests
 
 ---
 
-## ❗ Limitations & Future Enhancements
-- No persistent file/database saving in mock mode
-- Deleting saved schools not implemented
-- No GUI version
-- No support for bulk import/export (CSV/JSON)
-
----
-
 ## 🎓 Academic Use
 This application was created for educational use as part of a software development course. All code is student-written and demonstrates principles of modularity, MVC separation, test coverage, and user-centered design.
 
