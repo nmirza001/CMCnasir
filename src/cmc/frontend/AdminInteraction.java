@@ -24,6 +24,102 @@ public class AdminInteraction extends UserInteraction{
 	
 	//(0) - display methods
 	
+    /**
+     * Displays a list of users in a tabular format
+     * @param users The list of users to display
+     */
+    private void displayUserTable(List<User> users) {
+        if (users == null || users.isEmpty()) {
+            System.out.println("No users to display.");
+            return;
+        }
+        
+        // Find maximum lengths for formatting
+        int maxUsernameLength = "Username".length();
+        int maxFirstNameLength = "First Name".length();
+        int maxLastNameLength = "Last Name".length();
+        int maxTypeLength = "Type".length();
+        int maxStatusLength = "Status".length();
+        
+        for (User user : users) {
+            maxUsernameLength = Math.max(maxUsernameLength, user.getUsername().length());
+            maxFirstNameLength = Math.max(maxFirstNameLength, user.getFirstName().length());
+            maxLastNameLength = Math.max(maxLastNameLength, user.getLastName().length());
+            maxTypeLength = Math.max(maxTypeLength, user.isAdmin() ? "Admin".length() : "User".length());
+            maxStatusLength = Math.max(maxStatusLength, user.isActivated() ? "Active".length() : "Inactive".length());
+        }
+        
+        // Add padding
+        maxUsernameLength += 2;
+        maxFirstNameLength += 2;
+        maxLastNameLength += 2;
+        maxTypeLength += 2;
+        maxStatusLength += 2;
+        
+        // Format string
+        String format = "%-3s | %-" + maxUsernameLength + "s | %-" + maxFirstNameLength + 
+                       "s | %-" + maxLastNameLength + "s | %-" + maxTypeLength + 
+                       "s | %-" + maxStatusLength + "s\n";
+        
+        // Print header
+        System.out.printf(format, "#", "Username", "First Name", "Last Name", "Type", "Status");
+        
+        // Print separator
+        int totalLength = 4 + maxUsernameLength + 3 + maxFirstNameLength + 3 + 
+                         maxLastNameLength + 3 + maxTypeLength + 3 + maxStatusLength;
+        for (int i = 0; i < totalLength; i++) {
+            System.out.print("-");
+        }
+        System.out.println();
+        
+        // Print data
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            System.out.printf(format, (i + 1), user.getUsername(), user.getFirstName(), 
+                             user.getLastName(), (user.isAdmin() ? "Admin" : "User"), 
+                             (user.isActivated() ? "Active" : "Inactive"));
+        }
+        System.out.println();
+    }
+    
+    /**
+     * Displays a simplified list of users with just their numbers and usernames
+     * @param users The list of users to display
+     */
+    private void displaySimpleUserList(List<User> users) {
+        if (users == null || users.isEmpty()) {
+            System.out.println("No users to display.");
+            return;
+        }
+        
+        // Find maximum username length
+        int maxUsernameLength = "Username".length();
+        for (User user : users) {
+            maxUsernameLength = Math.max(maxUsernameLength, user.getUsername().length());
+        }
+        
+        // Add padding
+        maxUsernameLength += 2;
+        
+        // Format string
+        String format = "%-3s | %-" + maxUsernameLength + "s\n";
+        
+        // Print header
+        System.out.printf(format, "#", "Username");
+        
+        // Print separator
+        int totalLength = 4 + maxUsernameLength;
+        for (int i = 0; i < totalLength; i++) {
+            System.out.print("-");
+        }
+        System.out.println();
+        
+        // Print data
+        for (int i = 0; i < users.size(); i++) {
+            System.out.printf(format, (i + 1), users.get(i).getUsername());
+        }
+        System.out.println();
+    }
     
     //(1) - Adder & Subtracter methods
     
@@ -61,17 +157,17 @@ public class AdminInteraction extends UserInteraction{
     // ask the admin for a username and then remove that user from the
  	// database
  	public boolean removeUser(Scanner s) {
- 		
  		List<User> allUsers = getAllUsers();
-
- 		int len = allUsers.size();
- 		// List starts at 1
- 		for(int i = 0; i < len; i++) {
- 			String msg = String.format("%d. %s", i + 1, allUsers.get(i).getUsername());
- 			System.out.println(msg);
- 		}
+        
+        if (allUsers.isEmpty()) {
+            System.out.println("No users in the system to remove.");
+            return false;
+        }
+        
+        // Display users in a table format
+ 		displaySimpleUserList(allUsers);
   
- 		System.out.print("Username number:");
+ 		System.out.print("Enter user number to remove: ");
   
  		int usernum;
  		try {
@@ -86,28 +182,35 @@ public class AdminInteraction extends UserInteraction{
   
  		// List starts at 1 so zero is not a valid option
  		if(usernum <= 0 || usernum > allUsers.size()) {
+ 			System.out.println("Invalid user number. Please select a number between 1 and " + allUsers.size());
  			return false;
  		}
  		
  		// Shift everything by 1 since list starts at 1
  		User u = allUsers.get(usernum - 1);
  		
- 		return this.theSystemController.removeUser(u);
+ 		boolean success = this.theSystemController.removeUser(u);
+ 		if (success) {
+ 		    System.out.println("User '" + u.getUsername() + "' successfully removed.");
+ 		} else {
+ 		    System.out.println("Failed to remove user '" + u.getUsername() + "'.");
+ 		}
+ 		return success;
  	}
  	
  	//ask the admin for a username and then deactivates that user
  	public boolean deactivateUser(Scanner s) {
- 		
  		List<User> allUsers = getAllUsers();
-
- 		int len = allUsers.size();
- 		// List starts at 1
- 		for(int i = 0; i < len; i++) {
- 			String msg = String.format("%d. %s", i + 1, allUsers.get(i).getUsername());
- 			System.out.println(msg);
- 		}
+        
+        if (allUsers.isEmpty()) {
+            System.out.println("No users in the system to deactivate.");
+            return false;
+        }
+ 		
+ 		// Display users in a table format with activation status
+ 		displayUserTable(allUsers);
   
- 		System.out.print("Username number:");
+ 		System.out.print("Enter user number to deactivate: ");
   
  		int usernum;
  		try {
@@ -122,13 +225,20 @@ public class AdminInteraction extends UserInteraction{
   
  		// List starts at 1 so zero is not a valid option
  		if(usernum <= 0 || usernum > allUsers.size()) {
+ 			System.out.println("Invalid user number. Please select a number between 1 and " + allUsers.size());
  			return false;
  		}
  		
  		// Shift everything by 1 since list starts at 1
  		User u = allUsers.get(usernum - 1);
  		
- 		return this.theSystemController.deactivateUser(u);
+ 		boolean success = this.theSystemController.deactivateUser(u);
+ 		if (success) {
+ 		    System.out.println("User '" + u.getUsername() + "' successfully deactivated.");
+ 		} else {
+ 		    System.out.println("Failed to deactivate user '" + u.getUsername() + "'.");
+ 		}
+ 		return success;
  	}
  	
  	/**
@@ -138,33 +248,41 @@ public class AdminInteraction extends UserInteraction{
  	 * @author tflynn001
  	 * Version April 14, 2025
  	 */
- 	
  	public boolean searchUsers(Scanner s) {
         List<User> uList = getAllUsers();
         
-        System.out.print("Username name to search for:");
+        if (uList.isEmpty()) {
+            System.out.println("No users in the system to search.");
+            return false;
+        }
+        
+        System.out.print("Username to search for: ");
         
  		String searchName = s.nextLine();
+ 		
+ 		if (searchName.trim().isEmpty()) {
+ 		    System.out.println("Displaying all users:");
+ 		    displayUserTable(uList);
+ 		    return true;
+ 		}
 
-        int nameSpot = 0;
-        
-        for (int i = 0; i < uList.size(); i++) {
-            User us = uList.get(i);
-            
-            boolean ignoreState = searchName.equals("");
-            if(!ignoreState && !us.getUsername().equals(searchName)) continue;
-            
-            nameSpot = i + 1;
-            System.out.println("The user you are looking for has the number " + nameSpot);
-            System.out.println(us.getUsername() + " | " + us.getFirstName() + " | " + us.getLastName());
-            break;
+        // Find users matching the search term
+        List<User> matchingUsers = new ArrayList<>();
+        for (User user : uList) {
+            if (user.getUsername().toLowerCase().contains(searchName.toLowerCase())) {
+                matchingUsers.add(user);
+            }
         }
-        if(nameSpot > 0)
-        	return true;
-        else
-        	return false;
+        
+        if (matchingUsers.isEmpty()) {
+            System.out.println("No users found matching '" + searchName + "'.");
+            return false;
+        } else {
+            System.out.println("Found " + matchingUsers.size() + " user(s) matching '" + searchName + "':");
+            displayUserTable(matchingUsers);
+            return true;
+        }
     }
- 	
  	
  	//(2) - Admin Viewer Methods
  	
@@ -187,6 +305,5 @@ public class AdminInteraction extends UserInteraction{
  	
  	
  	//(4) - Admin Function Formatter Methods
-
 
 }
