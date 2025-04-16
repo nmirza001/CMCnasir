@@ -66,6 +66,7 @@ public class MockDatabaseController extends DatabaseController {
 		savedSchools.putIfAbsent(username, new ArrayList<String>());
 		
 		List<String> list = savedSchools.get(username);
+		if(list.contains(schoolName)) return false;
 		return list.add(schoolName);
 	}
 	
