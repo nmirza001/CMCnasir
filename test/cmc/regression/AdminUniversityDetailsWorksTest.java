@@ -76,9 +76,9 @@ public class AdminUniversityDetailsWorksTest {
 		    String input = "2\n" //University Menu
 						+ "4\n" //Edit University
 						+ "1\n" //Selecting the first only uni
-						+ "\n" //Name (don't change)
-						+ "\nURBAN" //New State
-						+ "\n\n\n\n\n\n\n\n\n\n\n\n" //all other fields ignored
+						+ "\n\n" //Name (don't change) & state
+						+ "URBAN\n" //Location
+						+ "\n\n\n\n\n\n\n\n\n\n\n" //all other fields ignored
 						+ "5\n"; //Go Back
 
 			InputStream enterStream = new ByteArrayInputStream(input.getBytes());
