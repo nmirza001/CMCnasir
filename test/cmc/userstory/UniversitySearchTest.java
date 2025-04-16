@@ -34,7 +34,8 @@ public class UniversitySearchTest {
 	
 	@Before
 	public void setUp() throws CMCException {
-		ui = new UserInteraction();
+		DatabaseController mock = new MockDatabaseController();
+		ui = new UserInteraction(mock);
 	}
 	
 	@After

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import cmc.backend.*;
 import cmc.*;
+import cmc.backend.controllers.*;
 
 public class RemoveUserDoesntWork {
 
@@ -15,8 +16,9 @@ public class RemoveUserDoesntWork {
 	
 	@Test
 	public void test() throws CMCException {
-		AccountController ac = new AccountController();
-		SystemController sc = new SystemController();
+		DatabaseController db = new MockDatabaseController();
+		AccountController ac = new AccountController(db);
+		SystemController sc = new SystemController(db);
 		
 		User u = new User(U_USER, PASSWD, false, "Admin", "McAdministrator");
 		ac.addUser(u);

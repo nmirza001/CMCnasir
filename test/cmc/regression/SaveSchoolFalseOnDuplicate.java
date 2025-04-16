@@ -11,6 +11,7 @@ import cmc.CMCException;
 import cmc.backend.AccountController;
 import cmc.backend.User;
 import cmc.backend.controllers.DatabaseController;
+import cmc.backend.controllers.MockDatabaseController;
 
 public class SaveSchoolFalseOnDuplicate {
 
@@ -22,8 +23,8 @@ public class SaveSchoolFalseOnDuplicate {
 	
 	@Before
 	public void setUp() throws CMCException {
-		db = new DatabaseController();
-		ac = new AccountController();
+		db = new MockDatabaseController();
+		ac = new AccountController(db);
 		User u = new User(USERNAME, PASSWD, false, "lebron", "james");
 		u.setActivated(false);
 		ac.addUser(u);

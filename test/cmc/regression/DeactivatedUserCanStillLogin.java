@@ -12,6 +12,7 @@ import cmc.backend.AccountController;
 import cmc.backend.SystemController;
 import cmc.backend.User;
 import cmc.backend.controllers.DatabaseController;
+import cmc.backend.controllers.MockDatabaseController;
 
 public class DeactivatedUserCanStillLogin {
 
@@ -19,18 +20,18 @@ public class DeactivatedUserCanStillLogin {
 	private static final String PASSWD = "pass123$";
 	private static final User usr = new User(USERNAME, PASSWD, false, "Test", "Acct");
 	
-	private AccountController db;
+	private AccountController ac;
 	
 	@Before
 	public void setUp() throws CMCException {
-		db = new AccountController();
+		ac = new AccountController(new MockDatabaseController());
 		usr.setActivated(false);
-		db.addUser(usr);
+		ac.addUser(usr);
 	}
 	
 	@After
 	public void tearDown() throws CMCException {
-		db.removeUser(usr);
+		ac.removeUser(usr);
 	}
 	
 	@Test

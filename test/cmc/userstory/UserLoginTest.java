@@ -30,10 +30,10 @@ public class UserLoginTest {
 	
 	@Before
 	public void setUp() throws CMCException {
-		db = new DatabaseController();
+		db = new MockDatabaseController();
 		db.addUser(usr);
 		
-		ui = new UserInteraction();
+		ui = new UserInteraction(db);
 	}
 	
 	@After
